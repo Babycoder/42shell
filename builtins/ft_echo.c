@@ -1,10 +1,12 @@
 #include "../minishell.h"
-#include "../LIBFT/libft.h"
+#include "../libft/libft.h"
 
 int     ft_echon(char *s)
 {
     int i = 0;
 
+    if (s == NULL)
+        return(0);
     if (s[i] != '-')
         return(0);
     i++;
@@ -20,18 +22,19 @@ int     ft_echon(char *s)
 int     ft_echo(char **cmd)
 {
     int i;
-    int n;
+    int n = 0;
 
     i = 1;
     if (cmd[i] != NULL)
     {
-        n = ft_echon(cmd[i]);
-        if (n == 1)
-            i = 2;
+        while(ft_echon(cmd[i]) == 1)
+        {
+            n = 1;
+            i++;
+        }
     }
     while (cmd[i] != NULL)
     {
-
         printf("%s", cmd[i]);
         if (cmd[i + 1] != NULL)
             printf(" ");
