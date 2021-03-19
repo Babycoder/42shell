@@ -11,7 +11,7 @@ int     main(int argc, char **argv, char **env)
     head = get_envp(env);
     //print_list(head);
     
-    char *cmd[] = {"ls", NULL};
+    char *cmd[] = {"ls", "-l", NULL};
 
     //ret = execve("/bin/ls", cmd, env);
     //printf("%d\n", ft_isabsolute("/hello"));
@@ -25,7 +25,7 @@ int     main(int argc, char **argv, char **env)
         ft_exit(cmd);
     else
         printf("command not found\n");*/
-    ft_path(cmd, head, env);
+    ft_path(cmd, head);
 
     return(0);
 }

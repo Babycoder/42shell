@@ -2,7 +2,7 @@
 #include "../libft/libft.h"
 
 
-char    *get_path(char **env)
+/*char    *get_path(char **env)
 {
     int i;
     char *path = NULL;
@@ -18,6 +18,21 @@ char    *get_path(char **env)
         i++;
     }
     return(path);
+}*/
+
+char    *getpath(t_node *node)
+{
+    int i;
+    i = 0;
+    while (node != NULL)
+    {
+        if (ft_ispath(node->data))
+        {
+            return(node->data + 5);
+        }
+        node = node->next;
+    }
+    return(NULL);
 }
 
 char     *check_command(char **split, char *cmd)
@@ -35,29 +50,19 @@ char     *check_command(char **split, char *cmd)
     return(NULL);
 }
 
-int     ft_path(char  **cmd, t_node *head, char **env)
+int     ft_path(char  **cmd, t_node *head)
 {
     char *path;
     char **split;
     char *command;
 
-    if (!(path = getenv("PATH")))
+    if (!(path = getpath(head)))
         return(0);
     split = ft_split(path, ':');
     command = check_command(split, cmd[0]);
     if (command)
-        execve(command, cmd, env);
+        execve(command, cmd, NULL);
     else
         printf("command not found\n");
-        
-
-    //execve(command, cmd, env);
-    //print2d(split);
-    //printf("x\n");
-    //printf("%s\n", command);
-    //printf("%s\n", getenv("PATH"));
-
-
-
     return(1);
 }

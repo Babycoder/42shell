@@ -23,11 +23,12 @@ int     ft_exit(char **cmd);
 void	ft_free_split(char **split);
 int			ft_isabsolute(char *s);
 int			ft_ispath(char *s);
-int     ft_path(char  **cmd, t_node *head, char **env);
+int     ft_path(char  **cmd, t_node *head);
 void	print2d(char **s);
 char	*ft_join(char const *s1, char const *s2);
 void    push_node(t_node **head, char *newdata);
 void    print_list(t_node *node);
 t_node     *get_envp(char **env);
 char     *check_command(char **split, char *cmd);
+char    *get_path(t_node *node);
 #endif
