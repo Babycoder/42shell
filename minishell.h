@@ -10,7 +10,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-typedef struct s_node {
+typedef struct s_node 
+{
     char *data;
     struct s_node *next;
 }               t_node;
@@ -20,6 +21,7 @@ int     ft_echo(char **cmd);
 int     ft_pwd(char **cmd);
 int     ft_cd(char **cmd);
 int     ft_exit(char **cmd);
+int     ft_env(t_node *head);
 void	ft_free_split(char **split);
 int			ft_isabsolute(char *s);
 int			ft_ispath(char *s);

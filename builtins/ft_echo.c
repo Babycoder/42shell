@@ -35,12 +35,12 @@ int     ft_echo(char **cmd)
     }
     while (cmd[i] != NULL)
     {
-        printf("%s", cmd[i]);
+        ft_putstr_fd(cmd[i], 1);
         if (cmd[i + 1] != NULL)
-            printf(" ");
+            ft_putchar_fd(' ', 1);
         i++;
     }
     if (n == 0)
-        printf("\n");
+        ft_putchar_fd('\n', 1);
     return(1);   
 }

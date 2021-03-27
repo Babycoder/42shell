@@ -4,11 +4,11 @@
 
 int     ft_pwd(char **cmd)
 {
-    char cwd[256];
+    char cwd[1200];
 
     if (getcwd(cwd, sizeof(cwd)) == NULL)
         return(0);
     else
-        printf("%s\n", cwd);
+        ft_putendl_fd(cwd, 1);
     return (1);     
 }
