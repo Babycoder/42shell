@@ -22,6 +22,7 @@ int     ft_pwd(char **cmd);
 int     ft_cd(char **cmd);
 int     ft_exit(char **cmd);
 int     ft_env(t_node *head);
+int     ft_export(t_node **head, char **cmd);
 void	ft_free_split(char **split);
 int			ft_isabsolute(char *s);
 int			ft_ispath(char *s);
