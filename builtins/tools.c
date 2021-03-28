@@ -108,3 +108,28 @@ t_node     *get_envp(char **env)
 
 }
 
+char	*ft_equal(char	*s1)
+{
+	char		*temp;
+	char		*res;
+	int			ls1;
+
+
+	ls1 = 0;
+	if (!s1)
+		return (NULL);
+	while (s1[ls1++])
+		;
+	temp = (char *)malloc((ls1 + 3));
+	if (temp == NULL)
+		return (NULL);
+	res = temp;
+	while (*s1 != '=')
+		*temp++ = *s1++;
+	*temp++ = '=';
+	*temp++ = 39;
+	*temp++ = '=';
+	*temp++ = 39;
+	*temp = '\0';
+	return (res);
+}

@@ -4,7 +4,7 @@
 
 int     ft_pwd(char **cmd)
 {
-    char cwd[1200];
+    char cwd[1024];
 
     if (getcwd(cwd, sizeof(cwd)) == NULL)
         return(0);

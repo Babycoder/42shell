@@ -1,5 +1,7 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
+
+
 int     novalue(char *s)
 {
     int i;
@@ -11,7 +13,7 @@ int     novalue(char *s)
         {
             if (s[i+1])
                 return(0);
-            return(1);
+            return(2);
         }
         i++;
     }
@@ -27,8 +29,10 @@ int     ft_export(t_node **head, char **cmd)
     {
         if (!(ret = novalue(cmd[i])))
             push_node(head, cmd[i]);
-        else
+        else if (ret == 1)
             push_node(head, ft_strjoin(cmd[i], "=''"));
+        else if (ret == 2)
+            push_node(head, ft_strjoin(cmd[i], "''"));
         i++;
     }
     print_list(*head);

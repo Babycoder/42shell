@@ -34,4 +34,5 @@ void    print_list(t_node *node);
 t_node     *get_envp(char **env);
 char     *check_command(char **split, char *cmd);
 char    *get_path(t_node *node);
+char	*ft_equal(char	*s1);
 #endif
