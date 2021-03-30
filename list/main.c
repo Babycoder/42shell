@@ -4,13 +4,37 @@
 
 typedef struct s_node 
 {
-    int data;
+    char *data;
     struct s_node *next;
 }               t_node;
 
 
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t i;
 
-void push(t_node **head, int data)
+	i = 0;
+	if ((s1[i] == '\0' && s2[i] == '\0') || n == 0)
+		return (0);
+	while (i < n - 1 && s1[i] != '\0' && s2[i] != '\0')
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int     ft_strlen(char *s)
+{
+    int i =0;
+
+    while(s[i])
+        i++;
+    return(i);
+}
+
+void push(t_node **head, char *data)
 {
     t_node *new_node = malloc(sizeof(t_node));
     new_node->data  = data;
@@ -22,13 +46,13 @@ void printlist(t_node *node)
 {
     while (node != NULL)
     {
-        printf(" %d ", node->data);
+        printf(" %s ", node->data);
         node = node->next;
     }
 }
 
 
-void    deletenode(t_node **head, int pos)
+void    deletenode(t_node **head, char *pos)
 {
     int i = 0;
     t_node *tmp;
@@ -39,7 +63,7 @@ void    deletenode(t_node **head, int pos)
     tmp = *head;
     
     // If head needs to be removed
-    if(pos == 0)
+    if(ft_strncmp(tmp->data, pos, ft_strlen(tmp->data)) == 0)
     {
         *head = tmp->next;
         free(tmp);
@@ -48,7 +72,7 @@ void    deletenode(t_node **head, int pos)
     
 
     //Find Previous node of the node to be deleted 
-    while (i < pos - 1 && tmp != NULL)
+    while (ft_strncmp(tmp->next->data, pos, ft_strlen(tmp->next->data)) && tmp != NULL)
     {
         tmp = tmp->next;
         i++;
@@ -70,28 +94,46 @@ void    deletenode(t_node **head, int pos)
 
 }
     
-  
+int     check_delete(t_node *node, char *s)
+{
+    int len;
+    int len1 = ft_strlen(node->data);
+    int len2 = ft_strlen(s);
+
+    if (len1 > len2)
+        len = len1;
+    else
+        len = len2;
+
+    while (node != NULL)
+    {
+        if  (ft_strncmp(node->data, s, len) == 0)
+            return(1);
+        node = node->next;
+    }
+    return(0);
+}
 
 
 
 int     main(int argc, char **argv)
 {
 
-    printf("%d\n", ft_strncmp("ZYMEN", "AMGH", 3));
+    //printf("%d\n", ft_strncmp("AYMEN", "AYMEN", 3));
 
-    /*t_node *head = NULL;
+    t_node *head = NULL;
 
-    push(&head, 1);
-    push(&head, 2);
-    push(&head, 3);
-    push(&head, 4);
-    push(&head, 5);
+    char s[]= "fsg";
+    push(&head, "facebook");
+    push(&head, "instagram");
+    push(&head, "twitter");
+    push(&head, "tiktok");
     printf("Linked List Created:\n\n");
     printlist(head);
-    printf("\n\nLinked List After deleton at Position 0:\n\n");
-    deletenode(&head, 0);
-    deletenode(&head, 1);
-    deletenode(&head, 2);
-    printlist(head);*/
+    printf("\n\nLinked List After delete \"%s\":\n\n", s);
+    if (check_delete(head, s))
+        deletenode(&head, s);
+    printlist(head);
+    return(0);
 
 }

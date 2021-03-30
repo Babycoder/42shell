@@ -133,3 +133,123 @@ char	*ft_equal(char	*s1)
 	*temp = '\0';
 	return (res);
 }
+
+int     check_value(char *s)
+{
+    int i;
+
+    i = 0;
+    while(s[i])
+    {
+        if (s[i] == '=')
+        {
+            if(s[i+1])
+                return(2);
+            return(1);
+        }
+        i++;
+    }
+    return(0);
+}
+
+void    print_cases(char *s, int ret)
+{
+    int i;
+
+    if (ret == 0)
+        ft_putendl_fd(s, 1);
+    if (ret == 1)
+    {
+        ft_putstr_fd(s, 1);
+        ft_putendl_fd("\"\"", 1);
+    }
+    if (ret == 2)
+    {
+        i = 0;
+        while(s[i] != '=')
+            ft_putchar_fd(s[i++], 1);
+        i++;
+        ft_putstr_fd("=\"", 1);
+        while(s[i])
+            ft_putchar_fd(s[i++], 1);
+        ft_putendl_fd("\"", 1);
+    }
+}
+
+void    print_export(t_node *node, int fd)
+{
+    int ret = 0;
+
+    while (node != NULL)
+    {
+        ft_putstr_fd("declare -x ", fd);
+        ret = check_value(node->data);
+        print_cases(node->data, ret);
+        node = node->next;
+    }
+}
+
+int     valid_id(char *s)
+{
+    int i;
+
+    i = 0;
+    if(!ft_isalpha(s[i]) && s[i] != '_')
+        return(0);
+    while(s[i] && s[i]!= '=')
+    {
+        if(ft_isdigit(s[i]) || ft_isalpha(s[i]) || s[i] == '_')
+            i++;
+        else    
+            return(0);
+    }
+    return(1);
+}
+
+void    export_error(char *s, int fd)
+{
+    ft_putstr_fd(s, fd);
+    ft_putendl_fd(": not a valid identifier", fd);
+}
+
+void    deletenode(t_node **head, char *pos)
+{
+    int i = 0;
+    t_node *tmp;
+    t_node *next;
+    
+    if(*head == NULL)
+        return;
+    tmp = *head;
+    
+    // If head needs to be removed
+    if(ft_strncmp(tmp->data, pos, ft_strlen(tmp->data)) == 0)
+    {
+        *head = tmp->next;
+        free(tmp);
+        return;
+    }
+    
+
+    //Find Previous node of the node to be deleted 
+    while (ft_strncmp(tmp->next->data, pos, ft_strlen(tmp->next->data)) && tmp != NULL)
+    {
+        tmp = tmp->next;
+        i++;
+    }
+
+    //If position is more than number of nodes
+    if (tmp == NULL || tmp->next == NULL)
+        return;
+    
+    // Node tmp->next is the node to be deleted
+    // Store pointer to the next of node to be deleted
+    
+    next = tmp->next->next;
+    
+    // Unlink the node from linked list
+
+    free(tmp->next); // fre memory
+    tmp->next = next;
+
+}
