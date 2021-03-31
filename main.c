@@ -11,7 +11,7 @@ int     main(int argc, char **argv, char **env)
     head = get_envp(env);
     //print_list(head);
 
-    char *cmd[] = {"export", "13256AYMEN=GHAZALI",  NULL};
+    char *cmd[] = {"export", "z=hello", "z=",  NULL};
 
 
     if (ft_strcmp(cmd[0], "echo") == 0)

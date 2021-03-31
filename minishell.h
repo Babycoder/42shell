@@ -44,5 +44,6 @@ void    print_export(t_node *node, int fd);
 void    print_cases(char *s, int ret);
 int     check_value(char *s);
 void    deletenode(t_node **head, char *pos);
+int     arglen(char *s);
 
 #endif

@@ -96,10 +96,11 @@ void    deletenode(t_node **head, char *pos)
     
 int     check_delete(t_node *node, char *s)
 {
-    int len;
-    int len1 = ft_strlen(node->data);
+       int len;
+    int len1 = 0;//ft_strlen(node->data);
     int len2 = ft_strlen(s);
-
+    while(node->data[len1] && node->data[len1] != '=')
+        len1++;
     if (len1 > len2)
         len = len1;
     else
@@ -111,19 +112,28 @@ int     check_delete(t_node *node, char *s)
             return(1);
         node = node->next;
     }
-    return(0);
+    return(0); 
 }
 
+int     arglen(char *s)
+{
+    int i;
+    i = 0;
+
+    while(s[i] && s[i] != '=')
+        i++;
+    return(i);
+}
 
 
 int     main(int argc, char **argv)
 {
-
+    //char s[]= "aymen=ghazali";
     //printf("%d\n", ft_strncmp("AYMEN", "AYMEN", 3));
 
-    t_node *head = NULL;
+   /* t_node *head = NULL;
 
-    char s[]= "fsg";
+    char s[]= "facebook";
     push(&head, "facebook");
     push(&head, "instagram");
     push(&head, "twitter");
@@ -131,9 +141,10 @@ int     main(int argc, char **argv)
     printf("Linked List Created:\n\n");
     printlist(head);
     printf("\n\nLinked List After delete \"%s\":\n\n", s);
-    if (check_delete(head, s))
-        deletenode(&head, s);
-    printlist(head);
+   // if (check_delete(head, s))
+    deletenode(&head, s);
+    printlist(head);*/
+    printf("%d\n", arglen("s=dfsdfasg"));
     return(0);
 
 }

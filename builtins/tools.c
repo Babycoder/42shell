@@ -223,7 +223,7 @@ void    deletenode(t_node **head, char *pos)
     tmp = *head;
     
     // If head needs to be removed
-    if(ft_strncmp(tmp->data, pos, ft_strlen(tmp->data)) == 0)
+    if(ft_strncmp(tmp->data, pos, arglen(tmp->data)) == 0)
     {
         *head = tmp->next;
         free(tmp);
@@ -232,7 +232,7 @@ void    deletenode(t_node **head, char *pos)
     
 
     //Find Previous node of the node to be deleted 
-    while (ft_strncmp(tmp->next->data, pos, ft_strlen(tmp->next->data)) && tmp != NULL)
+    while (ft_strncmp(tmp->next->data, pos, arglen(tmp->next->data)) && tmp != NULL)
     {
         tmp = tmp->next;
         i++;
