@@ -27,15 +27,17 @@ int     isequal(char *s)
 
 int     check_overwrite(t_node *node, char *s)
 {
-    int len1 = arglen(node->data);
+    int len1 = 0;
     int len2 = arglen(s);
     
-    if (len1 != len2)
-        return(0);
     while (node != NULL)
     {
-        if  (ft_strncmp(node->data, s, len1) == 0)
-            return(1);
+        len1 = arglen(node->data);
+        if (len1 == len2)
+        {
+            if  (ft_strncmp(node->data, s, len1) == 0)
+                return(1);
+        }
         node = node->next;
     }
     return(0); 
@@ -50,7 +52,7 @@ int     ft_export(t_node **head, char **cmd)
     {
         if (valid_id(cmd[i]))
         {
-            if (check_overwrite(*head, cmd[i]))
+            if (check_overwrite(*head, cmd[i]) == 1)
             {
                 if(isequal(cmd[i]))
                 {
