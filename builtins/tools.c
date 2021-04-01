@@ -212,6 +212,19 @@ void    export_error(char *s, int fd)
     ft_putendl_fd(": not a valid identifier", fd);
 }
 
+
+int     get_arglen(char *s1, char *s2)
+{
+    int len1 = arglen(s1);
+    int len2 = arglen(s2);
+
+    if (len1 > len2)
+        return(len1);
+    else
+        return(len2);
+}
+
+
 void    deletenode(t_node **head, char *pos)
 {
     int i = 0;
@@ -223,7 +236,7 @@ void    deletenode(t_node **head, char *pos)
     tmp = *head;
     
     // If head needs to be removed
-    if(ft_strncmp(tmp->data, pos, arglen(pos)) == 0)
+    if(ft_strncmp(tmp->data, pos, get_arglen(tmp->data, pos)) == 0)
     {
         *head = tmp->next;
         free(tmp);
@@ -232,7 +245,7 @@ void    deletenode(t_node **head, char *pos)
     
 
     //Find Previous node of the node to be deleted 
-    while (ft_strncmp(tmp->next->data, pos, arglen(pos)) && tmp != NULL)
+    while (ft_strncmp(tmp->next->data, pos, get_arglen(tmp->next->data, pos)) && tmp != NULL)
     {
         tmp = tmp->next;
         i++;

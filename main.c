@@ -11,9 +11,8 @@ int     main(int argc, char **argv, char **env)
     head = get_envp(env);
     //print_list(head);
 
-    char *cmd[] = {"export", "zzzzzzzzzzzz=", "zzzzzzzzzzzz=hello", "zzzzzzzzzzzz", "zzzzzzzzzzzz=", "zzzzzzzzzzzz=ewfwef",  "zzzzzzzzzzzz=wetrgg", "zzzzzzzzzzzz=dfgdsfgdsfg", "zzzzzzzzzzzz=123", "zzzzzzzzzzzz=", "zzzzzzzzzzzz", NULL};
-    //char *cmd[] = {"export", "zzz", "zzz=hello", NULL};
-    
+    char *cmd[] = {"export", "z=hello", "z", "z=world", "z=", "zz=hello", "zz", "zz=world", "zz=", "zz=", "zz=", "zz=h", "zz", "zz=", "zzzzzzzzzzzz", "zz=hello", "zz", "zz=", "zz=world", "zzzzzzzzzzzzzz=hfghf", "zzzzzzzzzzzz=works", "zzzzzzzzzzzz", "zzzzzzzzzzzz=fine", "zzzzzzzzzzzzzz=workd fine",NULL};
+
 
     if (ft_strcmp(cmd[0], "echo") == 0)
         ft_echo(cmd);

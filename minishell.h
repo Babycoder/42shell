@@ -45,5 +45,5 @@ void    print_cases(char *s, int ret);
 int     check_value(char *s);
 void    deletenode(t_node **head, char *pos);
 int     arglen(char *s);
-
+int     get_arglen(char *s1, char *s2);
 #endif
