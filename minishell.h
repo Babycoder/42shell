@@ -23,6 +23,7 @@ int     ft_cd(char **cmd);
 int     ft_exit(char **cmd);
 int     ft_env(t_node *head);
 int     ft_export(t_node **head, char **cmd);
+int     ft_unset(t_node **head, char **cmd);
 
 
 void	ft_free_split(char **split);
@@ -46,4 +47,7 @@ int     check_value(char *s);
 void    deletenode(t_node **head, char *pos);
 int     arglen(char *s);
 int     get_arglen(char *s1, char *s2);
+int     check_overwrite(t_node *node, char *s);
+int     isequal(char *s);
+
 #endif

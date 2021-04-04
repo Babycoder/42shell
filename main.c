@@ -11,8 +11,8 @@ int     main(int argc, char **argv, char **env)
     head = get_envp(env);
     //print_list(head);
 
-    char *cmd[] = {"export", "z=hello", "z", "z=world", "z=", "zz=hello", "zz", "zz=world", "zz=", "zz=", "zz=", "zz=h", "zz", "zz=", "zzzzzzzzzzzz", "zz=hello", "zz", "zz=", "zz=world", "zzzzzzzzzzzzzz=hfghf", "zzzzzzzzzzzz=works", "zzzzzzzzzzzz", "zzzzzzzzzzzz=fine", "zzzzzzzzzzzzzz=workd fine",NULL};
-
+    char *cmd[] = {"unset", "aymen", "123ghaazal=", "city", NULL};
+    char*test[] = {"export", "aymen=ghazali", "ghazali=aymen", "city=zemamra", NULL};
 
     if (ft_strcmp(cmd[0], "echo") == 0)
         ft_echo(cmd);
@@ -29,6 +29,11 @@ int     main(int argc, char **argv, char **env)
         ft_env(head);
     else if (ft_strcmp(cmd[0], "export") == 0)
         ft_export(&head, cmd);
+    else if (ft_strcmp(cmd[0], "unset") == 0)
+    {   
+        ft_export(&head, test);
+        ft_unset(&head,cmd);
+    }
    // else 
         //ft_path(cmd, head);
     else
