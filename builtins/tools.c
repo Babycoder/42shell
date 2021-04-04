@@ -266,3 +266,18 @@ void    deletenode(t_node **head, char *pos)
     tmp->next = next;
 
 }
+
+
+int     isequal(char *s)
+{
+    int i;
+
+    i = 0;
+    while(s[i])
+    {
+        if (s[i] == '=')
+            return (1);
+        i++;
+    }
+    return(0);
+}

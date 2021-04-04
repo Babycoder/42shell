@@ -11,19 +11,6 @@ int     arglen(char *s)
 }
 
 
-int     isequal(char *s)
-{
-    int i;
-
-    i = 0;
-    while(s[i])
-    {
-        if (s[i] == '=')
-            return (1);
-        i++;
-    }
-    return(0);
-}
 
 int     check_overwrite(t_node *node, char *s)
 {

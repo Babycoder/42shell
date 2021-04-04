@@ -16,6 +16,5 @@ int     ft_unset(t_node **head, char **cmd)
             export_error(cmd[i], fd);
         i++;
     }
-    //print_list(*head);
     return(1);
 }

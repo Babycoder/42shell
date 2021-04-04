@@ -21,7 +21,7 @@ int     ft_echo(char **cmd);
 int     ft_pwd(char **cmd);
 int     ft_cd(char **cmd);
 int     ft_exit(char **cmd);
-int     ft_env(t_node *head);
+int     ft_env(t_node *head, char **cmd);
 int     ft_export(t_node **head, char **cmd);
 int     ft_unset(t_node **head, char **cmd);
 
