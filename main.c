@@ -12,7 +12,7 @@ int     main(int argc, char **argv, char **env)
     //print_list(head);
 
     char *cmd[] = {"env", NULL};
-    char*test[] = {"export", "aymen=ghazali", "ghazali=aymen", "city=", NULL};
+    char*test[] = {"export", "aymen=ghazali", "ghazali=aymen", "city", NULL};
 
     if (ft_strcmp(cmd[0], "echo") == 0)
         ft_echo(cmd);
@@ -27,20 +27,20 @@ int     main(int argc, char **argv, char **env)
         ft_exit(cmd);
     else if (ft_strcmp(cmd[0], "env") == 0)
     {
-        ft_export(&head, test);
+        //ft_export(&head, test);
         ft_env(head, cmd);
     }
     else if (ft_strcmp(cmd[0], "export") == 0)
         ft_export(&head, cmd);
     else if (ft_strcmp(cmd[0], "unset") == 0)
     {   
-        ft_export(&head, test);
+        //ft_export(&head, test);
         ft_unset(&head,cmd);
     }
-   // else 
-        //ft_path(cmd, head);
-    else
-        printf("command not found\n");
+   else 
+        ft_path(cmd, head);
+    //else
+    //printf("command not found\n");
     //ft_env(head);
     //printf("\n======================================================\n");
     //print_list(head);

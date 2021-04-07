@@ -1,52 +1,46 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 
 
-
-int     arglen(char *s)
+int     main(int ac, char **av)
 {
-    int i;
-    i = 0;
+    int fd[2];
+    
+    //fd[0] ==> read;
+    //fd[1] ==> write;
 
-    while(s[i] && s[i] != '=')
-        i++;
-    return(i);
-}
+    if(pipe(fd) == -1)
+    {
+        printf("Error on pipe");
+        return 1;
+    }
 
-int     get_arglen(char *s1, char *s2)
-{
-    int len1 = arglen(s1);
-    int len2 = arglen(s2);
-
-    if (len1 > len2)
-        return(len1);
+    int id = fork();
+    if (id == 0)
+    {
+        close(fd[0]);
+        int x;
+        printf("what's your ages ? :");
+        scanf("%d", &x);
+        write(fd[1], &x, sizeof(int));
+        close(fd[1]);
+    }
     else
-        return(len2);
-}
+    {
+        close(fd[1]);
+        int y;
+        read(fd[0], &y, sizeof(int));
+        close(fd[0]);
+        printf("got from child process = %d\n", y);
+        
+    }
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t i;
-
-	i = 0;
-	if ((s1[i] == '\0' && s2[i] == '\0') || n == 0)
-		return (0);
-	while (i < n - 1 && s1[i] != '\0' && s2[i] != '\0')
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-
-
-
-
-
-int     main()
-{
-    printf("%d\n", ft_strncmp("abcd=argaga", "ab=agadgadfg", get_arglen("ab=agadgadfg", "abcd=argaga")));
     return(0);
 }
