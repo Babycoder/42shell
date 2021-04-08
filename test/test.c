@@ -39,7 +39,6 @@ int     main(int ac, char **av)
         read(fd[0], &y, sizeof(int));
         close(fd[0]);
         printf("got from child process = %d\n", y);
-        
     }
 
     return(0);

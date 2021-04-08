@@ -11,7 +11,7 @@ int     main(int argc, char **argv, char **env)
     head = get_envp(env);
     //print_list(head);
 
-    char *cmd[] = {"env", NULL};
+    char *cmd[] = {"exit", "12", "123", NULL};
     char*test[] = {"export", "aymen=ghazali", "ghazali=aymen", "city", NULL};
 
     if (ft_strcmp(cmd[0], "echo") == 0)
@@ -22,7 +22,7 @@ int     main(int argc, char **argv, char **env)
     {
         if(ft_cd(cmd) == 0)
             printf("No such file or directory\n");
-    }         
+    }
     else if (ft_strcmp(cmd[0], "exit") == 0)
         ft_exit(cmd);
     else if (ft_strcmp(cmd[0], "env") == 0)
