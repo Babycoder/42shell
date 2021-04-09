@@ -26,6 +26,7 @@ int     ft_export(t_node **head, char **cmd);
 int     ft_unset(t_node **head, char **cmd);
 
 
+
 void	ft_free_split(char **split);
 int     ft_strcmp(char *s1, char *s2);
 int			ft_isabsolute(char *s);
@@ -49,5 +50,8 @@ int     arglen(char *s);
 int     get_arglen(char *s1, char *s2);
 int     check_overwrite(t_node *node, char *s);
 int     isequal(char *s);
-
+void    deletelist(t_node **head_ref);
+t_node  *copyList(t_node* head);
+t_node  *sort_list(t_node *start);
+void    swap(t_node *a, t_node *b);
 #endif

@@ -176,17 +176,94 @@ void    print_cases(char *s, int ret)
     }
 }
 
+
+
+  
+void swap(t_node *a, t_node *b)
+{
+    char *temp = a->data;
+    a->data = b->data;
+    b->data = temp;
+}
+
+t_node  *sort_list(t_node *start)
+{
+    int swapped; 
+    int     i;
+    t_node *ptr1;
+    t_node *lptr = NULL;
+  
+    if (start == NULL)
+        return NULL;
+    swapped = 1;
+    while (swapped)
+    {
+        swapped = 0;
+        ptr1 = start;
+        while (ptr1->next != lptr)
+        {
+            if (ft_strcmp(ptr1->data, ptr1->next->data) > 0)
+            { 
+                swap(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+    return(start);
+}
+
+t_node *copyList(t_node* head)
+{
+    if (head == NULL) {
+        return NULL;
+    }
+    else {
+  
+        t_node* newnode = (t_node*)malloc(sizeof(t_node));
+  
+        newnode->data = head->data;
+  
+        newnode->next = copyList(head->next);
+  
+        return newnode;
+    }
+}
+
+void deletelist(t_node **head_ref)
+{
+   t_node *current = *head_ref;
+   t_node *next;
+ 
+   while (current != NULL)
+   {
+       next = current->next;
+       free(current);
+       current = next;
+   }
+   *head_ref = NULL;
+}
+
+
 void    print_export(t_node *node, int fd)
 {
     int ret = 0;
 
-    while (node != NULL)
+    t_node *tmp;
+    t_node *head_ref;
+
+    tmp = copyList(node);
+    tmp = sort_list(tmp);
+    head_ref = tmp;
+    while (tmp != NULL)
     {
         ft_putstr_fd("declare -x ", fd);
-        ret = check_value(node->data);
-        print_cases(node->data, ret);
-        node = node->next;
+        ret = check_value(tmp->data);
+        print_cases(tmp->data, ret);
+        tmp = tmp->next;
     }
+    deletelist(&head_ref);
 }
 
 int     valid_id(char *s)
@@ -223,6 +300,7 @@ int     get_arglen(char *s1, char *s2)
     else
         return(len2);
 }
+
 
 
 void    deletenode(t_node **head, char *pos)

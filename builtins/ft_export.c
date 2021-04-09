@@ -56,7 +56,7 @@ int     ft_export(t_node **head, char **cmd)
             export_error(cmd[i], fd);
         i++;
     }
-   // print_export(*head, fd);
+    print_export(*head, fd);
     //print_list(*head);
     return(1);
 }
