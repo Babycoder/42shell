@@ -11,8 +11,8 @@ int     main(int argc, char **argv, char **env)
     head = get_envp(env);
     //print_list(head);
 
-    char *cmd[] = {"export", NULL};
-    char*test[] = {"export", "aymen=ghazali", "ghazali=aymen", "city", NULL};
+    char *cmd[] = {"ls", NULL};
+    char*test[] = {"echo", "aymen=ghazali", "ghazali=aymen", "city", NULL};
 
     if (ft_strcmp(cmd[0], "echo") == 0)
         ft_echo(cmd);
