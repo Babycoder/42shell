@@ -1,5 +1,5 @@
 
-SRC = *.c ./builtins/*.c
+SRC = *.c ./builtins/*.c ./parse/*.c
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror

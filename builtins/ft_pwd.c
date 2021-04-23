@@ -2,7 +2,7 @@
 #include  "../libft/libft.h"
 
 
-int     ft_pwd(char **cmd)
+int     ft_pwd(t_format *ptr)
 {
     char cwd[1024];
 

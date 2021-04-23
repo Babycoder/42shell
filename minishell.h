@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "./libft/libft.h"
+#include "./parse/functions_headerfile.h"
 
 typedef struct s_node 
 {
@@ -18,8 +19,8 @@ typedef struct s_node
 }               t_node;
 
 int     ft_echo(char **cmd);
-int     ft_pwd(char **cmd);
-int     ft_cd(char **cmd);
+int     ft_pwd(t_format *ptr);
+int     ft_cd(t_format *ptr);
 int     ft_exit(char **cmd);
 int     ft_env(t_node *head, char **cmd);
 int     ft_export(t_node **head, char **cmd);
@@ -54,4 +55,6 @@ void    deletelist(t_node **head_ref);
 t_node  *copyList(t_node* head);
 t_node  *sort_list(t_node *start);
 void    swap(t_node *a, t_node *b);
+int      ft_execution(t_format *ptr, char **env);
+
 #endif
