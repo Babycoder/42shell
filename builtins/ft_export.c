@@ -32,30 +32,30 @@ int     check_overwrite(t_node *node, char *s)
     return(0); 
 }
 
-int     ft_export(t_node **head, char **cmd)
+int     ft_export(t_format *ptr, t_node **head)
 {
-    int fd = 1;
     int i = 1;
 
-    while (cmd[i] != NULL)
+    while (ptr->arguments != NULL)
     {
-        if (valid_id(cmd[i]))
+        if (valid_id(ptr->arguments->arg))
         {
-            if (check_overwrite(*head, cmd[i]) == 1)
+            if (check_overwrite(*head, ptr->arguments->arg) == 1)
             {
-                if(isequal(cmd[i]))
+                if(isequal(ptr->arguments->arg))
                 {
-                    deletenode(head, cmd[i]);
-                    push_node(head, cmd[i]);
+                    deletenode(head, ptr->arguments->arg);
+                    push_node(head, ptr->arguments->arg);
                 }
             }
             else
-                push_node(head, cmd[i]);
+                push_node(head, ptr->arguments->arg);
         }
         else
-            export_error(cmd[i], fd);
-        i++;
+            export_error(ptr->arguments->arg);
+        ptr->arguments = ptr->arguments->next;
     }
-    print_export(*head, fd);
+    print_export(*head);
+    //print_list(*head);
     return(1);
 }

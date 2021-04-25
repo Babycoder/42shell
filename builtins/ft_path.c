@@ -1,6 +1,16 @@
-#include "../minishell.h"
-#include "../libft/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_path.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
+/*   Updated: 2021/04/25 16:42:33 by ayghazal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../minishell.h"
 
 char    *getpath(t_node *node)
 {
@@ -32,7 +42,7 @@ char     *check_command(char **split, char *cmd)
     return(NULL);
 }
 
-int     ft_path(char  **cmd, t_node *head)
+int     ft_path(t_format *ptr, t_node *head)
 {
     char *path;
     char **split;
@@ -40,8 +50,8 @@ int     ft_path(char  **cmd, t_node *head)
 
     if (!(path = getpath(head)))
         return(0);
-    if (ft_isabsolute(cmd[0]))
-        execve(cmd[0], cmd, NULL);
+    if (ft_isabsolute(ptr->command))
+        execve(ptr->command, cmd, NULL);
     split = ft_split(path, ':');
     command = check_command(split, cmd[0]);
     ft_free_split(split);

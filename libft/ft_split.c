@@ -74,7 +74,7 @@ char				**ft_split(char const *s, char c)
 	{
 		while (*s != '\0' && *s == c)
 			s++;
-		if (!(temp[i] = ft_substr(s, 0, len(s, c))))
+		if (!(temp[i] = m_substr(s, 0, len(s, c))))
 			return (ft_free(&temp, i));
 		s = s + len(s, c);
 		i++;

@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/25 12:37:49 by ayghazal          #+#    #+#             */
+/*   Updated: 2021/04/25 12:37:51 by ayghazal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-#include "../libft/libft.h"
 
 int     ft_echon(char *s)
 {
@@ -19,28 +30,28 @@ int     ft_echon(char *s)
     return(1);
 }
 
-int     ft_echo(char **cmd)
+int     ft_echo(t_format *ptr)
 {
-    int i;
     int n = 0;
 
-    i = 1;
-    if (cmd[i] != NULL)
+    if (ptr->arguments != NULL)
     {
-        while(ft_echon(cmd[i]) == 1)
+        while(ft_echon(ptr->arguments->arg) == 1)
         {
             n = 1;
-            i++;
+            ptr->arguments = ptr->arguments->next;
+            if (ptr->arguments == NULL)
+                break;
         }
     }
-    while (cmd[i] != NULL)
+    while (ptr->arguments != NULL)
     {
-        ft_putstr_fd(cmd[i], 1);
-        if (cmd[i + 1] != NULL)
+        ft_putstr_fd(ptr->arguments->arg, 1);
+        if (ptr->arguments->next != NULL)
             ft_putchar_fd(' ', 1);
-        i++;
+        ptr->arguments = ptr->arguments->next;
     }
     if (n == 0)
         ft_putchar_fd('\n', 1);
-    return(1);   
+    return(0);   
 }

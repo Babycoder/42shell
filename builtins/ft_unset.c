@@ -1,20 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/25 13:28:54 by ayghazal          #+#    #+#             */
+/*   Updated: 2021/04/25 13:29:00 by ayghazal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int     ft_unset(t_node **head, char **cmd)
+int     ft_unset(t_format *ptr, t_node **head)
 {
-    int fd = 1;
-    int i = 1;
 
-    while(cmd[i] != NULL)
+    while(ptr->arguments != NULL)
     {
-        if (valid_id(cmd[i]) && !isequal(cmd[i]))
+        if (valid_id(ptr->arguments->arg) && !isequal(ptr->arguments->arg))
         {
-            if (check_overwrite(*head, cmd[i]) == 1)
-                deletenode(head, cmd[i]);
+            if (check_overwrite(*head, ptr->arguments->arg) == 1)
+                deletenode(head, ptr->arguments->arg);
         }
         else
-            export_error(cmd[i], fd);
-        i++;
+            export_error(ptr->arguments->arg);
+        ptr->arguments = ptr->arguments->next;
     }
-    return(1);
+    return(0);
 }

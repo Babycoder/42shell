@@ -52,7 +52,7 @@ typedef struct  s_format
     char                *pre_pipe_line;
 
     char                *command;
-    t_arguments         *arguments;
+    t_arguments         *arguments; // should to be 2D
     t_redirections      *redirections;
     
     t_pipes             *pipes;

@@ -246,7 +246,7 @@ void deletelist(t_node **head_ref)
 }
 
 
-void    print_export(t_node *node, int fd)
+void    print_export(t_node *node)
 {
     int ret = 0;
 
@@ -258,7 +258,7 @@ void    print_export(t_node *node, int fd)
     head_ref = tmp;
     while (tmp != NULL)
     {
-        ft_putstr_fd("declare -x ", fd);
+        ft_putstr_fd("declare -x ", 1);
         ret = check_value(tmp->data);
         print_cases(tmp->data, ret);
         tmp = tmp->next;
@@ -283,10 +283,9 @@ int     valid_id(char *s)
     return(1);
 }
 
-void    export_error(char *s, int fd)
+void    export_error(char *s)
 {
-    ft_putstr_fd(s, fd);
-    ft_putendl_fd(": not a valid identifier", fd);
+    printf("%s: not a valid identifier\n", s);
 }
 
 

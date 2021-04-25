@@ -1,7 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/25 12:42:44 by ayghazal          #+#    #+#             */
+/*   Updated: 2021/04/25 12:42:45 by ayghazal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-#include "../libft/libft.h"
-
-
 
 int   ft_isnumeric(char *s)
 {
@@ -21,26 +30,29 @@ int   ft_isnumeric(char *s)
     return (1);
 }
 
-int     ft_exit(char **cmd)
-{
-    
-    if (ft_isnumeric(cmd[1]))
+int     ft_exit(t_format *ptr)
+{  
+    if (ptr->arguments)
     {
-        if (cmd[2])
+        if(ft_isnumeric(ptr->arguments->arg))
         {
-            ft_putendl_fd("exit", 1);
-            ft_putendl_fd("minishell: exit: too many arguments", 1);
-            return(1);
+            if(ptr->arguments->next)
+            {
+                printf("exit\nminishell: exit: too many arguments\n");
+                return(1);
+            }
+            printf("exit\n");
+            exit(ft_atoi(ptr->arguments->arg));
         }
-        ft_putendl_fd("exit", 1);
-        if (cmd[1])
-            exit(ft_atoi(cmd[1]));
-        exit(0);
+        else
+        {
+            printf("exit\nminishell: exit: %s: numeric argument required\n", ptr->arguments->arg);
+            exit(255);
+        }
     }
     else
     {
-        ft_putendl_fd("exit", 1);
-        printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
-        exit(255);
+        printf("exit\n");
+        exit(0);
     }
 }
