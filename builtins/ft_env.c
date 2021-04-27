@@ -17,7 +17,7 @@ void    print_env(t_node *node)
     while (node != NULL)
     {
         if (isequal(node->data))
-            printf("%s\n", node->data);
+            ft_putendl_fd(node->data, 1);
         node = node->next;
     }
 }
@@ -28,7 +28,7 @@ int     ft_env(t_format *ptr,t_node *head)
 
     if (ptr->arguments)
     {
-        printf("Too many argument\n");
+        ft_putendl_fd("Too many argument", 1);
         return(1);
     }
     print_env(head);

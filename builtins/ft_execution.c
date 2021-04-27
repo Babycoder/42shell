@@ -37,7 +37,6 @@ int ft_execution(t_format *ptr, t_node **head)
             ft_export(ptr, head);
         else
             ft_path(ptr, *head);
-            //printf("command not found\n");
         ptr = ptr->next;
     }
     return (0);

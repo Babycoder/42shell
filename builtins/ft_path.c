@@ -46,18 +46,31 @@ int     ft_path(t_format *ptr, t_node *head)
 {
     char *path;
     char **split;
-    char *command;
+    char  *cmd;
+    int pid = 0;
 
-    if (!(path = getpath(head)))
-        return(0);
-    if (ft_isabsolute(ptr->command))
-        execve(ptr->command, cmd, NULL);
-    split = ft_split(path, ':');
-    command = check_command(split, cmd[0]);
-    ft_free_split(split);
-    if (command)
-        execve(command, cmd, NULL);
+    pid = fork();
+    if (pid == 0)
+    {
+        if (!(path = getpath(head)))
+        {
+            printf("minishell: %s: No such file or directory\n", ptr->command);
+            exit(1);
+        }
+        if (ft_isabsolute(ptr->command))
+            execve(ptr->command, convertlist(ptr->arguments, ptr->command), convertenv(head));
+        split = ft_split(path, ':');
+        cmd = check_command(split, ptr->command);
+        ft_free_split(split);
+        if (cmd)
+            execve(cmd, convertlist(ptr->arguments, ptr->command), convertenv(head));
+        else
+        {
+            printf("minishell: %s: command not found\n", ptr->command);
+            exit(1);
+        }
+    }
     else
-        return(0);
-    return(1);
+        wait(NULL);
+    return(0);
 }

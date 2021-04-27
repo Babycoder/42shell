@@ -34,8 +34,9 @@ int     check_overwrite(t_node *node, char *s)
 
 int     ft_export(t_format *ptr, t_node **head)
 {
-    int i = 1;
 
+    if (ptr->arguments == NULL)
+        print_export(*head);
     while (ptr->arguments != NULL)
     {
         if (valid_id(ptr->arguments->arg))
@@ -55,7 +56,5 @@ int     ft_export(t_format *ptr, t_node **head)
             export_error(ptr->arguments->arg);
         ptr->arguments = ptr->arguments->next;
     }
-    print_export(*head);
-    //print_list(*head);
     return(1);
 }

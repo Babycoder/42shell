@@ -77,7 +77,7 @@ void    push_node(t_node **head, char *newdata)
 {
     t_node *newnode = malloc(sizeof(t_node));
 
-    newnode->data = newdata;
+    newnode->data = ft_strdup(newdata);
     newnode->next = *head;
     *head=newnode;
 
@@ -87,7 +87,7 @@ void    print_list(t_node *node)
 {
     while (node != NULL)
     {
-        printf("%s\n", node->data);
+        ft_putendl_fd(node->data, 1);
         node = node->next;
     }
 }
@@ -357,4 +357,70 @@ int     isequal(char *s)
         i++;
     }
     return(0);
+}
+
+int     ft_listlen(t_arguments *node)
+{
+    int i;
+
+    i = 0;
+    while (node != NULL)
+    {
+        i++;
+        node = node->next;
+    }
+    return(i);
+}
+
+char       **convertlist(t_arguments *node, char *s)
+{
+    char **str;
+    int i;
+    int len;
+
+    i = 0;
+    len = ft_listlen(node);
+    str = (char **)malloc((len + 2) * sizeof(char*));
+    str[i] = ft_strdup(s);
+    i++;
+    while(node != NULL)
+    {
+        str[i] = ft_strdup(node->arg);
+        node = node->next;
+        i++;
+    }
+    str[i] = NULL;
+    return(str);
+}
+
+int     ft_envlen(t_node *node)
+{
+    int i;
+
+    i = 0;
+    while (node != NULL)
+    {
+        i++;
+        node = node->next;
+    }
+    return(i);
+}
+
+char    **convertenv(t_node *node)
+{
+    char    **str;
+    int i;
+    int len;
+
+    i = 0;
+    len = ft_envlen(node);
+    str = (char **)malloc((len + 1) * sizeof(char *));
+    while (node != NULL)
+    {
+        str[i] = ft_strdup(node->data);
+        node = node->next;
+        i++;
+    }
+    str[i] = NULL;
+    return(str);
 }

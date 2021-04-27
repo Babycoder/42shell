@@ -56,4 +56,8 @@ void    deletelist(t_node **head_ref);
 t_node  *copyList(t_node* head);
 t_node  *sort_list(t_node *start);
 void    swap(t_node *a, t_node *b);
+char    **convertlist(t_arguments *node, char *s);
+int     ft_listlen(t_arguments *node);
+char    **convertenv(t_node *node);
+int     ft_envlen(t_node *node);
 #endif
