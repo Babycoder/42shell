@@ -60,4 +60,5 @@ char    **convertlist(t_arguments *node, char *s);
 int     ft_listlen(t_arguments *node);
 char    **convertenv(t_node *node);
 int     ft_envlen(t_node *node);
+void    shlvl(t_node **head);
 #endif

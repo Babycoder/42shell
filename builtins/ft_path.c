@@ -63,7 +63,7 @@ int     ft_path(t_format *ptr, t_node *head)
         cmd = check_command(split, ptr->command);
         ft_free_split(split);
         if (cmd)
-            execve(cmd, convertlist(ptr->arguments, ptr->command), convertenv(head));
+            execve(cmd, convertlist(ptr->arguments, ptr->command), convertenv (head));
         else
         {
             printf("minishell: %s: command not found\n", ptr->command);

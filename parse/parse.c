@@ -37,7 +37,7 @@ char     *parse(char *input, t_format    *ptr)
 {
     if (ptr == NULL)
         return (NULL);
-    write(1,"minishell~$",12);
+    write(1,"minishell~$ ",13);
     input = fetch_input();//allocation here
     if (input == NULL)
         return (NULL);

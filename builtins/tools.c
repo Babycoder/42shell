@@ -246,7 +246,7 @@ void deletelist(t_node **head_ref)
 }
 
 
-void    print_export(t_node *node)
+ void    print_export(t_node *node)
 {
     int ret = 0;
 
@@ -302,6 +302,17 @@ int     get_arglen(char *s1, char *s2)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 void    deletenode(t_node **head, char *pos)
 {
     int i = 0;
@@ -316,6 +327,7 @@ void    deletenode(t_node **head, char *pos)
     if(ft_strncmp(tmp->data, pos, get_arglen(tmp->data, pos)) == 0)
     {
         *head = tmp->next;
+        free(tmp->data);
         free(tmp);
         return;
     }
@@ -338,11 +350,28 @@ void    deletenode(t_node **head, char *pos)
     next = tmp->next->next;
     
     // Unlink the node from linked list
-
+    free(tmp->next->data);
     free(tmp->next); // fre memory
     tmp->next = next;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 int     isequal(char *s)
