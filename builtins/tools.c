@@ -223,7 +223,7 @@ t_node *copyList(t_node* head)
   
         t_node* newnode = (t_node*)malloc(sizeof(t_node));
   
-        newnode->data = head->data;
+        newnode->data = ft_strdup(head->data);
   
         newnode->next = copyList(head->next);
   
@@ -239,6 +239,7 @@ void deletelist(t_node **head_ref)
    while (current != NULL)
    {
        next = current->next;
+       free(current->data);
        free(current);
        current = next;
    }

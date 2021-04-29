@@ -18,6 +18,13 @@ typedef struct s_node
     struct s_node *next;
 }               t_node;
 
+typedef struct  s_var
+{
+    int sin;
+    int sout;
+}               t_var;
+
+
 int     ft_execution(t_format *ptr, t_node **head);
 int     ft_echo(t_format *ptr);
 int     ft_pwd();
@@ -61,4 +68,5 @@ int     ft_listlen(t_arguments *node);
 char    **convertenv(t_node *node);
 int     ft_envlen(t_node *node);
 void    shlvl(t_node **head);
+int    check_redirection(t_format *ptr, t_node *head);
 #endif

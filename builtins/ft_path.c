@@ -42,6 +42,39 @@ char     *check_command(char **split, char *cmd)
     return(NULL);
 }
 
+int    check_redirection(t_format *ptr, t_node *head)
+{
+    int in;
+    int out;
+
+    in = 0;
+    out = 0;
+    while(ptr->redirections != NULL)
+    {
+        if (!(ft_strcmp(ptr->redirections->redirection_type, "<")))
+            in = open(ptr->redirections->redirection_file,  O_RDONLY, S_IRWXU);
+        if(!(ft_strcmp(ptr->redirections->redirection_type, ">")))
+            out = open(ptr->redirections->redirection_file, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+        if(!(ft_strcmp(ptr->redirections->redirection_type, ">>")))
+            out = open(ptr->redirections->redirection_file, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
+        if ((in < 0 || out < 0))
+        {
+            printf("minishell: %s: %s\n", ptr->redirections->redirection_file, "No such file or directory");
+            return(1);
+        }
+        if (ptr->redirections->next && out && ft_strcmp(ptr->redirections->next->redirection_type, "<"))
+            close(out);
+        if (ptr->redirections->next && in && !(ft_strcmp(ptr->redirections->next->redirection_type, "<")))
+            close(in);
+        ptr->redirections = ptr->redirections->next;
+    }
+    if(out)
+        dup2(out, STDOUT_FILENO);
+    if(in)
+        dup2(in, STDIN_FILENO);
+    return(0);
+}
+
 int     ft_path(t_format *ptr, t_node *head)
 {
     char *path;

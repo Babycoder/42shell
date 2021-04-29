@@ -13,14 +13,27 @@
 #include "../minishell.h"
 
 
+
+void    ft_resetio(int sin, int sout)
+{
+    dup2(sin, STDIN_FILENO);
+    dup2(sout, STDOUT_FILENO);
+}
+
 int ft_execution(t_format *ptr, t_node **head)
 {
+    int sout;
+    int sin;
     int ret;
 
     ret = 0;
+    sin = dup(STDIN_FILENO);
+    sout = dup(STDOUT_FILENO);
     
     while(ptr != NULL)
     {
+        if(check_redirection(ptr, *head))
+            return(1);
         if (ft_strcmp(ptr->command, "pwd") == 0)
             ft_pwd();
         else if (ft_strcmp(ptr->command, "cd") == 0)
@@ -37,6 +50,7 @@ int ft_execution(t_format *ptr, t_node **head)
             ft_export(ptr, head);
         else
             ft_path(ptr, *head);
+        ft_resetio(sin, sout);
         ptr = ptr->next;
     }
     return (0);
