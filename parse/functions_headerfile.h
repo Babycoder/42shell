@@ -41,6 +41,7 @@ typedef struct  s_pipes
     t_arguments         *arguments;
     t_redirections      *redirections;
     struct  s_pipes    *next;
+    int                 fd[2];
 }   t_pipes;
 
 typedef struct  s_format

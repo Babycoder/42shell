@@ -72,7 +72,6 @@ t_arguments    *fetch_arguments(t_linedata *data, t_arguments *ret, int counter)
 
 t_linedata      *a_s(t_linedata *data, t_redirections     *ptr)
 {
-
     ptr->redirection_type = data->slice;
     data = data->next;
     ptr->redirection_file = data->slice;
@@ -83,7 +82,6 @@ t_linedata      *a_s(t_linedata *data, t_redirections     *ptr)
 t_redirections    *fetch_redirection(t_linedata *data, t_redirections *ret, int counter)
 {
     t_redirections     *ptr;
-
     while(1)
     {
         if(data->redirection == 1)
@@ -107,18 +105,6 @@ t_redirections    *fetch_redirection(t_linedata *data, t_redirections *ret, int 
             break   ;
     }
     return (ret);
-}
-
-t_pipes    *f1(t_format    *ptr, int *start, int i)
-{
-    ptr->pre_pipe_line = trim_spaces(ft_substr(ptr->line, *start, i - 1));
-    ptr->sliced_line = split_id(ptr->pre_pipe_line);
-    ptr->command = fetch_command(ptr->sliced_line);
-    ptr->redirections = fetch_redirection(ptr->sliced_line, NULL, 0);
-    ptr->arguments = fetch_arguments(ptr->sliced_line, NULL, 0);
-    ptr->pipes = malloc(sizeof(t_pipes));
-    *start = i + 1;
-    return(ptr->pipes);
 }
 
 t_pipes    *f2(t_format    *ptr, int *start, int i)
@@ -170,24 +156,16 @@ void    ft_end(t_format    *ptr, int *i, int start)
 void    *fetch_pipes(t_format    *ptr, int start, int i)
 {
     t_pipes *tmp;
-
+    ptr->pipes = malloc(sizeof(t_pipes));
+    tmp = ptr->pipes;
     while (ptr->line[i] != 0)
     {
         i = skips(ptr, i);
         if (ptr->line[i] == '|')
         {
-            if (ptr->pre_pipe_line == NULL)
-            {
-                tmp = f1(ptr, &start, i);
-                if (tmp == NULL)
-                    return (NULL);
-            }
-            else
-            {
-                ptr->pipes = f2(ptr, &start, i);
-                if (ptr->pipes == NULL)
-                    return (NULL);
-            }
+            ptr->pipes = f2(ptr, &start, i);
+            if (ptr->pipes == NULL)
+                return (NULL);
         }
         ft_end(ptr, &i, start);
     }

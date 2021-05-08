@@ -1,5 +1,4 @@
 #include "functions_headerfile.h"
-
 void    print_args(t_arguments   *ptr)//DONT NORM IT
 {
     if (ptr != NULL)
@@ -13,7 +12,6 @@ void    print_args(t_arguments   *ptr)//DONT NORM IT
         printf("%s\n",ptr->arg);
     }
 }
-
 void    print_redirections(t_redirections   *ptr)//DONT NORM IT
 {
     if (ptr != NULL)
@@ -29,7 +27,6 @@ void    print_redirections(t_redirections   *ptr)//DONT NORM IT
         printf("%s||\n",ptr->redirection_file);
     }
 }
-
 void    print_pipes(t_pipes *ptr)//DONT NORM IT
 {
     if (ptr != NULL)
@@ -54,25 +51,22 @@ void    print_pipes(t_pipes *ptr)//DONT NORM IT
         printf("PIPE END\n");
     }
 }
-
 void    print_da(t_format    *ptr)//DONT NORM IT
 {
-    while (ptr->next != NULL)
+    while(1)
     {
-        printf("LINE = %s\n", ptr->pre_pipe_line);
-        if (ptr->command != NULL)
+        if (ptr->pipes != NULL)
+            print_pipes(ptr->pipes);
+        else if (ptr->pipes == NULL)
+        {
+            printf("LINE = %s\n", ptr->pre_pipe_line);
             printf("CMD = %s\n", ptr->command);
-        print_args(ptr->arguments);
-        print_redirections(ptr->redirections);
-        print_pipes(ptr->pipes);
+            print_args(ptr->arguments);
+            print_redirections(ptr->redirections);
+        }
+        printf("-------------------------------\n");
         ptr = ptr->next;
-        printf("-------------------------------\n");
+        if (ptr == NULL)
+            break ;
     }
-    printf("LINE = %s\n", ptr->pre_pipe_line);
-    if (ptr->command != NULL)
-        printf("CMD = %s\n", ptr->command);
-    print_args(ptr->arguments);
-    print_redirections(ptr->redirections);
-    print_pipes(ptr->pipes);
-        printf("-------------------------------\n");
 }

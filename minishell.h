@@ -69,4 +69,5 @@ char    **convertenv(t_node *node);
 int     ft_envlen(t_node *node);
 void    shlvl(t_node **head);
 int    check_redirection(t_format *ptr, t_node *head);
+int    ft_setpipes(t_format *ptr, t_node **head);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:17:49 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/04/25 12:17:51 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/03 15:19:05 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,22 @@ void    ft_resetio(int sin, int sout)
 {
     dup2(sin, STDIN_FILENO);
     dup2(sout, STDOUT_FILENO);
+}
+
+
+void	set_pipes_fd(t_format *ptr)
+{
+	/*if (cmds[i].sep && cmds[i].sep[0] == '|')
+		pipe(cmds[i].pipe);*/
+    /*t_pipes *tmp;
+    tmp = ptr->pipes;
+    while(ptr->pipes != NULL)
+    {
+        pipe(ptr->pipes->fd);
+        ptr->pipes = ptr->pipes->next;
+    }
+    ptr->pipes = tmp;
+    printf("%s\n", ptr->pipes->command);*/
 }
 
 int ft_execution(t_format *ptr, t_node **head)
@@ -32,6 +48,7 @@ int ft_execution(t_format *ptr, t_node **head)
     
     while(ptr != NULL)
     {
+            //set_pipes_fd(ptr);
         if(check_redirection(ptr, *head))
             return(1);
         if (ft_strcmp(ptr->command, "pwd") == 0)
