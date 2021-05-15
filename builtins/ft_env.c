@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 13:17:09 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/04/25 13:17:10 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/15 17:37:43 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void    print_env(t_node *node)
 }
 
 
-int     ft_env(t_format *ptr,t_node *head)
+int     ft_env(t_arguments *arguments,t_node *head)
 {
 
-    if (ptr->arguments)
+    if (arguments)
     {
         ft_putendl_fd("Too many argument", 1);
         return(1);

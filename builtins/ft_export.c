@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:32:28 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/04/30 14:32:32 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/15 17:45:06 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,29 @@ int     check_overwrite(t_node *node, char *s)
     return(0); 
 }
 
-int     ft_export(t_format *ptr, t_node **head)
+int     ft_export(t_arguments *arguments, t_node **head)
 {
 
-    if (ptr->arguments == NULL)
+    if (arguments == NULL)
         print_export(*head);
-    while (ptr->arguments != NULL)
+    while (arguments != NULL)
     {
-        if (valid_id(ptr->arguments->arg))
+        if (valid_id(arguments->arg))
         {
-            if (check_overwrite(*head, ptr->arguments->arg) == 1)
+            if (check_overwrite(*head, arguments->arg) == 1)
             {
-                if(isequal(ptr->arguments->arg))
+                if(isequal(arguments->arg))
                 {
-                    deletenode(head, ptr->arguments->arg);
-                    push_node(head, ptr->arguments->arg);
+                    deletenode(head, arguments->arg);
+                    push_node(head, arguments->arg);
                 }
             }
             else
-                push_node(head, ptr->arguments->arg);
+                push_node(head, arguments->arg);
         }
         else
-            export_error(ptr->arguments->arg);
-        ptr->arguments = ptr->arguments->next;
+            export_error(arguments->arg);
+        arguments = arguments->next;
     }
     return(1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:37:49 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/04/25 12:37:51 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/15 17:28:55 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,26 @@ int     ft_echon(char *s)
     return(1);
 }
 
-int     ft_echo(t_format *ptr)
+int     ft_echo(t_arguments *arguments)
 {
     int n = 0;
 
-    if (ptr->arguments != NULL)
+    if (arguments != NULL)
     {
-        while(ft_echon(ptr->arguments->arg) == 1)
+        while(ft_echon(arguments->arg) == 1)
         {
             n = 1;
-            ptr->arguments = ptr->arguments->next;
-            if (ptr->arguments == NULL)
+            arguments = arguments->next;
+            if (arguments == NULL)
                 break;
         }
     }
-    while (ptr->arguments != NULL)
+    while (arguments != NULL)
     {
-        ft_putstr_fd(ptr->arguments->arg, 1);
-        if (ptr->arguments->next != NULL)
+        ft_putstr_fd(arguments->arg, 1);
+        if (arguments->next != NULL)
             ft_putchar_fd(' ', 1);
-        ptr->arguments = ptr->arguments->next;
+        arguments = arguments->next;
     }
     if (n == 0)
         ft_putchar_fd('\n', 1);

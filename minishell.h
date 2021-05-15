@@ -26,14 +26,14 @@ typedef struct  s_var
 
 
 int     ft_execution(t_format *ptr, t_node **head);
-int     ft_echo(t_format *ptr);
+int     ft_echo(t_arguments *arguments);
 int     ft_pwd();
-int     ft_cd(t_format *ptr);
-int     ft_exit(t_format *ptr);
-int     ft_env(t_format *ptr, t_node *head);
-int     ft_export(t_format *ptr, t_node **head);
-int     ft_unset(t_format *ptr, t_node **head);
-int     ft_path(t_format *ptr, t_node *head);
+int     ft_cd(t_arguments *arguments);
+int     ft_exit(t_arguments *arguments);
+int     ft_env(t_arguments *arguments, t_node *head);
+int     ft_export(t_arguments *arguments, t_node **head);
+int     ft_unset(t_arguments *arguments, t_node **head);
+int     ft_path(char *command, t_arguments *arguments, t_node *head);
 
 
 
@@ -68,6 +68,7 @@ int     ft_listlen(t_arguments *node);
 char    **convertenv(t_node *node);
 int     ft_envlen(t_node *node);
 void    shlvl(t_node **head);
-int    check_redirection(t_format *ptr, t_node *head);
+int    check_redirection(t_redirections *redirections, t_node *head);
 int    ft_setpipes(t_format *ptr, t_node **head);
+int     ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirections, t_node **head);
 #endif
