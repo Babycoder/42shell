@@ -37,7 +37,7 @@ char     *parse(char *input, t_format    *ptr)
 {
     if (ptr == NULL)
         return (NULL);
-    write(1,"Minishell~$ ",12);
+    write(1,"minishell~$ ",13);
     input = fetch_input();//allocation here
     if (input == NULL)
         return (NULL);
@@ -58,5 +58,5 @@ char     *parse(char *input, t_format    *ptr)
         ft_freedom(ptr);
         return (NULL);
     }
-    return ("DONE");
+    return("done");
 }

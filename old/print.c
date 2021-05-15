@@ -1,5 +1,4 @@
 #include "functions_headerfile.h"
-
 void    print_args(t_arguments   *ptr)//DONT NORM IT
 {
     if (ptr != NULL)
@@ -13,7 +12,6 @@ void    print_args(t_arguments   *ptr)//DONT NORM IT
         printf("%s\n",ptr->arg);
     }
 }
-
 void    print_redirections(t_redirections   *ptr)//DONT NORM IT
 {
     if (ptr != NULL)
@@ -29,14 +27,13 @@ void    print_redirections(t_redirections   *ptr)//DONT NORM IT
         printf("%s||\n",ptr->redirection_file);
     }
 }
-
 void    print_pipes(t_pipes *ptr)//DONT NORM IT
 {
     if (ptr != NULL)
     {
         printf("||||||||||||||||||||||||||||||||\n");
         printf("PIPE START\n");
-        while(ptr != NULL)
+        while(ptr->next != NULL)
         {
             printf("LINE = %s\n", ptr->line);
             if (ptr->command != NULL)
@@ -46,10 +43,14 @@ void    print_pipes(t_pipes *ptr)//DONT NORM IT
             ptr = ptr->next;
             printf("||||||||||||||||||||||||||||||||\n");
         }
+        printf("LINE = %s\n", ptr->line);
+        if (ptr->command != NULL)
+            printf("CMD = %s\n", ptr->command);
+        print_args(ptr->arguments);
+        print_redirections(ptr->redirections);
         printf("PIPE END\n");
     }
 }
-
 void    print_da(t_format    *ptr)//DONT NORM IT
 {
     while(1)

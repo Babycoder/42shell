@@ -72,7 +72,6 @@ t_arguments    *fetch_arguments(t_linedata *data, t_arguments *ret, int counter)
 
 t_linedata      *a_s(t_linedata *data, t_redirections     *ptr)
 {
-
     ptr->redirection_type = data->slice;
     data = data->next;
     ptr->redirection_file = data->slice;
@@ -83,7 +82,6 @@ t_linedata      *a_s(t_linedata *data, t_redirections     *ptr)
 t_redirections    *fetch_redirection(t_linedata *data, t_redirections *ret, int counter)
 {
     t_redirections     *ptr;
-
     while(1)
     {
         if(data->redirection == 1)

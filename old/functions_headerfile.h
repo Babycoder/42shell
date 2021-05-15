@@ -41,6 +41,7 @@ typedef struct  s_pipes
     t_arguments         *arguments;
     t_redirections      *redirections;
     struct  s_pipes    *next;
+    int                 fd[2];
 }   t_pipes;
 
 typedef struct  s_format
@@ -52,7 +53,7 @@ typedef struct  s_format
     char                *pre_pipe_line;
 
     char                *command;
-    t_arguments         *arguments;
+    t_arguments         *arguments; // should to be 2D
     t_redirections      *redirections;
     
     t_pipes             *pipes;
@@ -62,21 +63,10 @@ typedef struct  s_format
 typedef     struct  s_var_rep
 {
     int     dollar_position;
-    char    *slice;
+    char    *string;
     char    *variable_content;
     char    *variable_name;
 } t_var_rep;
-
-typedef     struct  s_tools
-{
-    char    c;
-    int     i;
-    int     j;
-    int     n;
-    int     len;
-    int     counter;
-    char    *ret;
-} t_tools;
 
 char            *fetch_input();
 int             my_strcmp(char  *s1, char   *s2);
@@ -125,7 +115,4 @@ void            free_tformat_nodes(t_format    *ptr);
 void            free_tformat_contents(t_format *ptr);
 void            free_nodes(void *ptr);
 t_redirections    *fetch_redirection(t_linedata *data, t_redirections     *ret, int counter);
-char            *parse(char *input, t_format    *ptr);
-char            *quote_slash(char *slice);
-t_tools         *initialise_box(t_tools     *box, char *slice);
-char            *m_strjoin(char *s1, char *s2);
+char     *parse(char *input, t_format    *ptr);

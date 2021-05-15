@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:30:08 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/15 10:56:24 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/15 14:42:09 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,9 @@ int     main(int ac, char **av, char **env)
     while (1)
     {
         ptr = malloc(sizeof(t_format));
-        if (parse(input, ptr) == NULL)//formatted data is now stored in ptr
+        if (parse(input, ptr) == NULL)
             continue ;
-        //printf("hello\n");
-        
-        //ft_setpipes(ptr, &head);
         ft_execution(ptr, &head);
-        //print_da(ptr);//if you want to print the output
-        ft_freedom(ptr);//free func
     }
     return(0);
 }
