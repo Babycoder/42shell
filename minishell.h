@@ -25,7 +25,7 @@ typedef struct  s_var
 }               t_var;
 
 
-int     ft_execution(t_format *ptr, t_node **head);
+int     ft_exec(t_format *ptr, t_node **head);
 int     ft_echo(t_arguments *arguments);
 int     ft_pwd();
 int     ft_cd(t_arguments *arguments);

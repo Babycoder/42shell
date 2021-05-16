@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:30:08 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/15 14:55:24 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/16 13:28:43 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int     main(int ac, char **av, char **env)
         if (parse(input, ptr) == NULL)
             continue ;
         //print_da(ptr);
-        ft_execution(ptr, &head);
+        ft_exec(ptr, &head);
+        // set $? -- OLDPWD (change in ft_cd) -- (__ shouldn't printed)
     }
     return(0);
 }

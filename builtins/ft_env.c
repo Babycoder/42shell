@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 13:17:09 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/15 17:37:43 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/16 13:33:43 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int     ft_env(t_arguments *arguments,t_node *head)
 
     if (arguments)
     {
-        ft_putendl_fd("Too many argument", 1);
+        ft_putendl_fd("Too many argument", 2);
         return(1);
     }
     print_env(head);

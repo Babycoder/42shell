@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/15 17:49:32 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/16 12:52:11 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,20 @@ int    check_redirection(t_redirections *redirections, t_node *head)
     return(0);
 }
 
+void    cmd_error(char *s)
+{
+        ft_putstr_fd("minishell: ", 2);
+        ft_putstr_fd(s, 2);
+        ft_putstr_fd(": command not found\n", 2); 
+}
+
+void    path_error(char *s)
+{
+        ft_putstr_fd("minishell: ", 2);
+        ft_putstr_fd(s, 2);
+        ft_putstr_fd(": No such file or directory\n", 2); 
+}
+
 int     ft_path(char *command, t_arguments *arguments, t_node *head)
 {
     char *path;
@@ -87,7 +101,7 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
     {
         if (!(path = getpath(head)))
         {
-            printf("minishell: %s: No such file or directory\n", command);
+            path_error(command);
             exit(1);
         }
         if (ft_isabsolute(command))
@@ -99,7 +113,7 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
             execve(cmd, convertlist(arguments, command), convertenv (head));
         else
         {
-            printf("minishell: %s: command not found\n", command);
+            cmd_error(command);
             exit(1);
         }
     }

@@ -1,7 +1,26 @@
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <termios.h>
+#include <term.h>
+# include <termios.h>
+# include <termcap.h>
+# define UP_KEY 183
+# define DOWN_KEY 184
+# define ENTER_KEY 10
+# define DELETE_KEY 127
+//# define KEY_LEFT  186
+//# define KEY_RIGHT 185
+//# define TAB_KEY 9
+# define CTRL_D 4
 
+typedef struct  s_history
+{
+    struct  s_history   *previous;
+    char    *line;
+    struct  s_history   *next;
+}   t_history;
 typedef struct  s_bag
 {
     int                 i;
@@ -9,6 +28,12 @@ typedef struct  s_bag
     int                 cmd_check;
 }   t_bag;
 
+typedef struct  s_env
+{
+    char    *var_name;
+    char    *var_content;
+    struct s_env  *next;
+}   t_env;
 
 typedef struct  s_linedata
 {
@@ -46,11 +71,10 @@ typedef struct  s_pipes
 typedef struct  s_format
 {
     char                *line;
-    t_linedata         *sliced_line;
-
     int                 pipe_presence;
-    char                *pre_pipe_line;
 
+    t_linedata         *sliced_line;
+    char                *pre_pipe_line;
     char                *command;
     t_arguments         *arguments;
     t_redirections      *redirections;
@@ -129,3 +153,10 @@ char            *parse(char *input, t_format    *ptr);
 char            *quote_slash(char *slice);
 t_tools         *initialise_box(t_tools     *box, char *slice);
 char            *m_strjoin(char *s1, char *s2);
+char            *dollar_treatment(char  **env, char *slice);
+void            purge(char        **env, t_format    *ptr);
+void            cleanse_no_pipes(char        **env, t_format    *ptr);
+void            cleanse_yes_pipes(char        **env, t_format    *ptr);
+void            *termcaps(t_format    *formaptr, char        **env);
+void    ft_execution(char        **env, t_format    *ptr);
+char            *ft_strdupe(char *str);

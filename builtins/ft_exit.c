@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:42:44 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/15 17:36:07 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/16 13:32:14 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int   ft_isnumeric(char *s)
     return (1);
 }
 
+void    exit_error(char *s)
+{
+        ft_putstr_fd("exit\nminishell: exit: ", 2);
+        ft_putstr_fd(s, 2);
+        ft_putstr_fd(": numeric argument required\n", 2); 
+}
+
 int     ft_exit(t_arguments *arguments)
 {  
     if (arguments)
@@ -38,7 +45,7 @@ int     ft_exit(t_arguments *arguments)
         {
             if(arguments->next)
             {
-                printf("exit\nminishell: exit: too many arguments\n");
+                ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
                 return(1);
             }
             printf("exit\n");
@@ -46,7 +53,7 @@ int     ft_exit(t_arguments *arguments)
         }
         else
         {
-            printf("exit\nminishell: exit: %s: numeric argument required\n", arguments->arg);
+            exit_error(arguments->arg);
             exit(255);
         }
     }

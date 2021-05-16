@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:32:51 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/04/30 14:32:52 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/16 13:39:23 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,9 @@ int     valid_id(char *s)
 
 void    export_error(char *s)
 {
-    printf("%s: not a valid identifier\n", s);
+    ft_putstr_fd("minishell: export: `", 2);
+    ft_putstr_fd(s, 2);
+    ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
 

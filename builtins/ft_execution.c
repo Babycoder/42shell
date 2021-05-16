@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:17:49 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/15 17:57:38 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/16 10:56:29 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,19 @@ int ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirecti
     return(0);
 }
 
-int ft_execution(t_format *ptr, t_node **head)
+int ft_exec(t_format *ptr, t_node **head)
 {
-    int sout;
-    int sin;
     int ret;
 
     ret = 0;
-    sin = dup(STDIN_FILENO);
-    sout = dup(STDOUT_FILENO);
     
     while(ptr != NULL)
     {
-        ft_exec_cmd(ptr->command, ptr->arguments, ptr->redirections, head);  
-        //set_pipes_fd(ptr);
+        purge(convertenv(*head), ptr);
+        if(ptr->pipes == NULL)
+            ft_exec_cmd(ptr->command, ptr->arguments, ptr->redirections, head);  
+       // else if (ptr->pipes != NULL)
+         //   ft_setpipes(ptr);
 
         /*if(check_redirection(ptr, *head))
             return(1);
