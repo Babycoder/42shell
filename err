@@ -1,0 +1,21 @@
+total 2648
+drwxr-xr-x  20 ayghazal  2019      680 May 17 16:27 .
+drwxr-xr-x  31 ayghazal  2019     1054 May 16 11:00 ..
+-rw-r--r--   1 ayghazal  2019     8196 May 15 18:30 .DS_Store
+drwxr-xr-x  13 ayghazal  2019      442 May 16 18:27 .git
+drwxr-xr-x   3 ayghazal  2019      102 May 15 13:49 .vscode
+-rwxr-xr-x   1 ayghazal  2019      225 May 15 13:49 Makefile
+drwxr-xr-x  15 ayghazal  2019      510 May 17 10:07 builtins
+-rwx------   1 ayghazal  2019        0 May 17 16:28 err
+drwxr-xr-x   4 ayghazal  2019      136 May 15 18:26 f
+-rwxr-xr-x   1 ayghazal  2019  1275921 May 15 13:49 fr.subject.pdf
+drwxr-xr-x   3 ayghazal  2019      102 May 15 13:49 includes
+drwxr-xr-x  44 ayghazal  2019     1496 May 17 10:07 libft
+drwxr-xr-x   4 ayghazal  2019      136 May 15 13:49 list
+-rw-r--r--   1 ayghazal  2019      101 May 15 13:49 lllll
+-rw-r--r--   1 ayghazal  2019     2049 May 16 13:28 main.c
+-rwxr-xr-x   1 ayghazal  2019    45076 May 17 16:27 minishell
+-rwxr-xr-x   1 ayghazal  2019     2245 May 17 11:51 minishell.h
+drwxr-xr-x  16 ayghazal  2019      544 May 15 13:49 old
+drwxr-xr-x  20 ayghazal  2019      680 May 15 18:04 parse
+drwxr-xr-x   4 ayghazal  2019      136 May 15 13:49 test

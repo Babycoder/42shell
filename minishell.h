@@ -71,4 +71,5 @@ void    shlvl(t_node **head);
 int    check_redirection(t_redirections *redirections, t_node *head);
 int    ft_setpipes(t_pipes *pipes, t_node **head);
 int     ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirections, t_node **head);
+void    ft_resetio(int sin, int sout);
 #endif

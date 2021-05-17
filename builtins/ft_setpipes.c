@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 15:02:30 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/16 18:26:29 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/17 19:10:04 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,58 @@ int	pipe_len(t_pipes *pipes)
 
 int    ft_setpipes(t_pipes *pipes, t_node **head)
 {
+	int i = -1;
 	int len;
-
+	int prev;
+	int pid[100];
+	int fd[100][2];
+	
 	len = pipe_len(pipes);
-	printf("%d\n", len);
-
-	return (0);
+	while (++i < len)
+	{
+		if (i != len-1)
+			pipe(fd[i]);
+		pid[i] = fork();
+		if (pid[i] == 0)
+		{
+			prev = i - 1;
+			if (i == 0)
+			{
+				dup2(fd[i][1], 1);
+				close(fd[i][0]);
+				close(fd[i][1]);
+			}
+			if (i > 0 && (i < (len - 1)))
+			{
+				dup2(fd[prev][0], 0);
+				close(fd[prev][0]);
+				dup2(fd[i][1], 1);
+				close(fd[i][1]);
+			}
+			if (i == (len - 1))
+			{
+				dup2(fd[prev][0], 0);
+				close(fd[prev][0]);
+			}
+			ft_exec_cmd(pipes->command, pipes->arguments, pipes->redirections, head);
+			exit(0);
+		}
+		else
+		{
+			if (i == 0)
+				close(fd[i][1]);
+			if (i > 0 && (i < (len - 1)))
+			{
+				close(fd[i - 1][0]);
+				close(fd[i][1]);
+			}
+			if (i == (len - 1))
+				close(fd[i - 1][0]);
+		}
+		pipes = pipes->next;
+	}
+	i = -1;
+	while(++i < len)
+		wait(NULL);
+	return(0);
 }
