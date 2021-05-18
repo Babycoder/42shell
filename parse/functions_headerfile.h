@@ -15,6 +15,13 @@
 //# define TAB_KEY 9
 # define CTRL_D 4
 
+typedef struct  s_global
+{
+    int     p;
+}               t_global;
+
+t_global g_global;
+
 typedef struct  s_history
 {
     struct  s_history   *previous;

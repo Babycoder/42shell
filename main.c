@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:30:08 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/16 13:28:43 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/18 18:42:12 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void    shlvl(t_node **head)
     }
 }
 
+void handler(int sig)
+{
+    write(1, "\n", 1);
+}
+
 int     main(int ac, char **av, char **env)
 {
     char *input;
@@ -55,6 +60,8 @@ int     main(int ac, char **av, char **env)
     //env = shlvl(env);
     head = get_envp(env);
     shlvl(&head);
+    //SIGNAL FUN
+    signal(SIGINT, handler);
     while (1)
     {
         ptr = malloc(sizeof(t_format));
@@ -62,7 +69,6 @@ int     main(int ac, char **av, char **env)
             continue ;
         //print_da(ptr);
         ft_exec(ptr, &head);
-        // set $? -- OLDPWD (change in ft_cd) -- (__ shouldn't printed)
     }
     return(0);
 }

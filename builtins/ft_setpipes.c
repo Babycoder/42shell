@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 15:02:30 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/17 19:10:04 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/18 15:15:30 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int    ft_setpipes(t_pipes *pipes, t_node **head)
 				close(fd[prev][0]);
 				dup2(fd[i][1], 1);
 				close(fd[i][1]);
+				close(fd[i][0]);
 			}
 			if (i == (len - 1))
 			{
 				dup2(fd[prev][0], 0);
 				close(fd[prev][0]);
 			}
+			//g_global.p = 5;
 			ft_exec_cmd(pipes->command, pipes->arguments, pipes->redirections, head);
 			exit(0);
 		}
@@ -76,11 +78,12 @@ int    ft_setpipes(t_pipes *pipes, t_node **head)
 			}
 			if (i == (len - 1))
 				close(fd[i - 1][0]);
+			wait(NULL);
 		}
 		pipes = pipes->next;
 	}
-	i = -1;
+	/*i = -1;
 	while(++i < len)
-		wait(NULL);
+		waitpid(pid[i], NULL, 0);*/
 	return(0);
 }

@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <signal.h>
 #include "./libft/libft.h"
 #include "./parse/functions_headerfile.h"
 

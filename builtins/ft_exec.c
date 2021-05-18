@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:17:49 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/17 17:04:19 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/18 18:17:57 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,16 @@ int ft_exec(t_format *ptr, t_node **head)
     
     while(ptr != NULL)
     {
+        g_global.p = 0;
         purge(convertenv(*head), ptr);
         if(ptr->pipes == NULL)
             ft_exec_cmd(ptr->command, ptr->arguments, ptr->redirections, head);
         else if (ptr->pipes)
+        {
+            g_global.p = 5;
             ft_setpipes(ptr->pipes, head);
+        }
+       // printf("pipe flag = %d\n", g_global.p);
         ptr = ptr->next;
     }
     return (0);

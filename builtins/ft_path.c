@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/16 16:18:04 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/18 14:21:19 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,13 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
     pid = fork();
     if (pid == 0)
     {
+        if (ft_isabsolute(command))
+            execve(command, convertlist(arguments, command), convertenv(head));
         if (!(path = getpath(head)))
         {
             path_error(command);
             exit(1);
         }
-        if (ft_isabsolute(command))
-            execve(command, convertlist(arguments, command), convertenv(head));
         split = ft_split(path, ':');
         cmd = check_command(split, command);
         ft_free_split(split);
