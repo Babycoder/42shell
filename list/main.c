@@ -52,7 +52,7 @@ void printlist(t_node *node)
 }
 
 
-void    deletenode(t_node **head, char *pos)
+/*void    deletenode(t_node **head, char *pos)
 {
     int i = 0;
     t_node *tmp;
@@ -92,7 +92,7 @@ void    deletenode(t_node **head, char *pos)
     free(tmp->next); // fre memory
     tmp->next = next;
 
-}
+}*/
     
 int     check_delete(t_node *node, char *s)
 {

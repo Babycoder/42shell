@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:30:08 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/18 18:42:12 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:59:41 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,23 @@ void    shlvl(t_node **head)
 
 void handler(int sig)
 {
+    write(1,"minishell~$ ",13);
     write(1, "\n", 1);
+}
+
+void    init_pwd(t_node **head)
+{
+    char *cwd;
+    char *tmp;
+    
+    cwd = getcwd(NULL, 0);
+    tmp = ft_strjoin("PWD=", cwd);
+    deletenode(head, "PWD");
+    push_node(head, tmp);
+    deletenode(head, "OLDPWD");
+    push_node(head, "OLDPWD");
+    free(cwd);
+    free(tmp);
 }
 
 int     main(int ac, char **av, char **env)
@@ -57,9 +73,9 @@ int     main(int ac, char **av, char **env)
     t_format    *ptr;
     t_node  *head;
 
-    //env = shlvl(env);
     head = get_envp(env);
     shlvl(&head);
+    init_pwd(&head);
     //SIGNAL FUN
     signal(SIGINT, handler);
     while (1)

@@ -29,7 +29,7 @@ typedef struct  s_var
 int     ft_exec(t_format *ptr, t_node **head);
 int     ft_echo(t_arguments *arguments);
 int     ft_pwd();
-int     ft_cd(t_arguments *arguments);
+int     ft_cd(t_arguments *arguments, t_node **head);
 int     ft_exit(t_arguments *arguments);
 int     ft_env(t_arguments *arguments, t_node *head);
 int     ft_export(t_arguments *arguments, t_node **head);
@@ -73,4 +73,5 @@ int    check_redirection(t_redirections *redirections, t_node *head);
 int    ft_setpipes(t_pipes *pipes, t_node **head);
 int     ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirections, t_node **head);
 void    ft_resetio(int sin, int sout);
+char    *get_envar(t_node *node, char *s);
 #endif

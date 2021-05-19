@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:17:49 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/18 18:17:57 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:48:35 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirecti
     if (ft_strcmp(command, "pwd") == 0)
         ft_pwd();
     else if (ft_strcmp(command, "cd") == 0)
-        ft_cd(arguments);
+        ft_cd(arguments, head);
     else if(ft_strcmp(command, "echo") == 0)
         ft_echo(arguments);
     else if (ft_strcmp(command, "exit") == 0)
@@ -55,11 +55,13 @@ int ft_exec(t_format *ptr, t_node **head)
     int ret;
 
     ret = 0;
+    //char **env;
     
     while(ptr != NULL)
     {
         g_global.p = 0;
-        purge(convertenv(*head), ptr);
+        //env = convertenv(*head);
+        //purge(env, ptr);
         if(ptr->pipes == NULL)
             ft_exec_cmd(ptr->command, ptr->arguments, ptr->redirections, head);
         else if (ptr->pipes)
@@ -68,6 +70,7 @@ int ft_exec(t_format *ptr, t_node **head)
             ft_setpipes(ptr->pipes, head);
         }
        // printf("pipe flag = %d\n", g_global.p);
+        //ft_free_split(env);
         ptr = ptr->next;
     }
     return (0);
