@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:30:08 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/19 15:59:41 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 07:39:05 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,20 @@ void    shlvl(t_node **head)
     }
 }
 
-void handler(int sig)
+
+/*void handler(int sig)
 {
-    write(1,"minishell~$ ",13);
-    write(1, "\n", 1);
-}
+                                                                                                                                                 if (g_global.forked == 0)
+    {
+         ft_putendl_fd("\b\b  \b\b", 1);
+         write(1,"minishell~$ ",13);
+    }
+    else
+    {
+        ft_putchar_fd('\n', 1);
+    }
+}*/
+
 
 void    init_pwd(t_node **head)
 {
@@ -59,9 +68,11 @@ void    init_pwd(t_node **head)
     
     cwd = getcwd(NULL, 0);
     tmp = ft_strjoin("PWD=", cwd);
-    deletenode(head, "PWD");
+    if (check_overwrite(*head, "PWD"))
+        deletenode(head, "PWD");
     push_node(head, tmp);
-    deletenode(head, "OLDPWD");
+    if (check_overwrite(*head, "PWD"))
+        deletenode(head, "OLDPWD");
     push_node(head, "OLDPWD");
     free(cwd);
     free(tmp);
@@ -77,7 +88,7 @@ int     main(int ac, char **av, char **env)
     shlvl(&head);
     init_pwd(&head);
     //SIGNAL FUN
-    signal(SIGINT, handler);
+    //signal(SIGINT, handler);
     while (1)
     {
         ptr = malloc(sizeof(t_format));

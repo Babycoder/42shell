@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/18 14:21:19 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 07:44:08 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,13 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
     pid = fork();
     if (pid == 0)
     {
+        //g_global.forked = 0;
         if (ft_isabsolute(command))
             execve(command, convertlist(arguments, command), convertenv(head));
         if (!(path = getpath(head)))
         {
             path_error(command);
-            exit(1);
+            return(1);
         }
         split = ft_split(path, ':');
         cmd = check_command(split, command);
@@ -114,10 +115,12 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
         else
         {
             cmd_error(command);
-            exit(1);
+            return(1);
         }
     }
     else
+    {
         wait(NULL);
+    }
     return(0);
 }

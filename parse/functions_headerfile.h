@@ -17,6 +17,7 @@
 
 typedef struct  s_global
 {
+    int     forked;
     int     p;
 }               t_global;
 
