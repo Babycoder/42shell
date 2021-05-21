@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:17:49 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/20 17:57:30 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 08:54:48 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int ft_exec(t_format *ptr, t_node **head)
     while(ptr != NULL)
     {
         g_global.p = 0;
-        g_global.forked = 1;
+        //g_global.forked = 1;
         //purge(convertenv(*head), ptr);
         if(ptr->pipes == NULL)
             ft_exec_cmd(ptr->command, ptr->arguments, ptr->redirections, head);

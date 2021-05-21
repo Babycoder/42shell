@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 15:02:30 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/21 07:37:44 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 09:08:02 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int    ft_setpipes(t_pipes *pipes, t_node **head)
 		if (i != len-1)
 			pipe(fd[i]);
 		pid[i] = fork();
+		g_global.forked = 0;
 		if (pid[i] == 0)
 		{
 			prev = i - 1;
@@ -85,6 +86,7 @@ int    ft_setpipes(t_pipes *pipes, t_node **head)
 	{
 		 //g_global.forked = 0;
 		waitpid(pid[i], NULL, 0);
+		g_global.forked = 1;
 	}
 	return(0);
 }

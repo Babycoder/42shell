@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/21 07:44:08 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 09:10:48 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,20 @@ int    check_redirection(t_redirections *redirections, t_node *head)
 
 void    cmd_error(char *s)
 {
-        ft_putstr_fd("minishell: ", 2);
+    dprintf(2, "minishell: %s: : command not found\n", s);
+    exit(1);
+        /*ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(s, 2);
-        ft_putstr_fd(": command not found\n", 2); 
+        ft_putstr_fd(": command not found\n", 2);*/
 }
 
 void    path_error(char *s)
 {
-        ft_putstr_fd("minishell: ", 2);
+    dprintf(2, "minishell: %s: No such file or directory\n", s);
+    exit(1);
+        /*ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(s, 2);
-        ft_putstr_fd(": No such file or directory\n", 2); 
+        ft_putstr_fd(": No such file or directory\n", 2);*/
 }
 
 int     ft_path(char *command, t_arguments *arguments, t_node *head)
@@ -94,18 +98,20 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
     char *path;
     char **split;
     char  *cmd;
-    int pid = 0;
+    int pid;
 
+    pid = 0;
+   // if (g_global.p == 0)
     pid = fork();
+    g_global.forked = 0;
     if (pid == 0)
     {
-        //g_global.forked = 0;
         if (ft_isabsolute(command))
             execve(command, convertlist(arguments, command), convertenv(head));
         if (!(path = getpath(head)))
         {
             path_error(command);
-            return(1);
+            //exit(1);
         }
         split = ft_split(path, ':');
         cmd = check_command(split, command);
@@ -115,12 +121,13 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
         else
         {
             cmd_error(command);
-            return(1);
+            //exit(1);
         }
     }
     else
     {
         wait(NULL);
+        g_global.forked = 1;
     }
     return(0);
 }

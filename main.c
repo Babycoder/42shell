@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:30:08 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/21 07:39:05 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 09:09:11 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ void    shlvl(t_node **head)
 }
 
 
-/*void handler(int sig)
+void handler(int sig)
 {
-                                                                                                                                                 if (g_global.forked == 0)
+    if (g_global.forked == 1)
     {
          ft_putendl_fd("\b\b  \b\b", 1);
          write(1,"minishell~$ ",13);
     }
-    else
+    else if (g_global.forked == 0)
     {
         ft_putchar_fd('\n', 1);
     }
-}*/
+}
 
 
 void    init_pwd(t_node **head)
@@ -87,8 +87,9 @@ int     main(int ac, char **av, char **env)
     head = get_envp(env);
     shlvl(&head);
     init_pwd(&head);
+    g_global.forked = 1;
     //SIGNAL FUN
-    //signal(SIGINT, handler);
+    signal(SIGINT, handler);
     while (1)
     {
         ptr = malloc(sizeof(t_format));
