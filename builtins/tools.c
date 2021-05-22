@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:32:51 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/19 14:08:15 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 12:22:32 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void    push_node(t_node **head, char *newdata)
 {
     t_node *newnode = malloc(sizeof(t_node));
 
-    newnode->data = ft_strdup(newdata);
+    newnode->data = ay_strdup(newdata);
     newnode->next = *head;
     *head=newnode;
 
@@ -235,7 +235,7 @@ t_node *copyList(t_node* head)
   
         t_node* newnode = (t_node*)malloc(sizeof(t_node));
   
-        newnode->data = ft_strdup(head->data);
+        newnode->data = ay_strdup(head->data);
   
         newnode->next = copyList(head->next);
   
@@ -425,11 +425,11 @@ char       **convertlist(t_arguments *node, char *s)
     i = 0;
     len = ft_listlen(node);
     str = (char **)malloc((len + 2) * sizeof(char*));
-    str[i] = ft_strdup(s);
+    str[i] = ay_strdup(s);
     i++;
     while(node != NULL)
     {
-        str[i] = ft_strdup(node->arg);
+        str[i] = ay_strdup(node->arg);
         node = node->next;
         i++;
     }
@@ -461,7 +461,7 @@ char    **convertenv(t_node *node)
     str = (char **)malloc((len + 1) * sizeof(char *));
     while (node != NULL)
     {
-        str[i] = ft_strdup(node->data);
+        str[i] = ay_strdup(node->data);
         node = node->next;
         i++;
     }

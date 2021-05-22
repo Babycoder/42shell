@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 19:21:26 by ayghazal          #+#    #+#             */
-/*   Updated: 2019/10/27 20:56:18 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 12:21:10 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
 char		*ft_strchr(const char *s, int c);
-char		*ft_strdup(const char *s1);
-char		*ft_strjoin(char const *s1, char const *s2);
+char		*ay_strdup(const char *s1);
+char		*ay_strjoin(char const *s1, char const *s2);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 size_t		m_strlen(const char *s);

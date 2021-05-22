@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/21 09:10:48 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/22 15:38:59 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int    check_redirection(t_redirections *redirections, t_node *head)
             out = open(redirections->redirection_file, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
         if ((in < 0 || out < 0))
         {
-            printf("minishell: %s: %s\n", redirections->redirection_file, "No such file or directory");
+            dprintf(2, "minishell: %s: %s\n", redirections->redirection_file, "No such file or directory");
             return(1);
         }
         if (redirections->next && out && ft_strcmp(redirections->next->redirection_type, "<"))
@@ -77,20 +77,14 @@ int    check_redirection(t_redirections *redirections, t_node *head)
 
 void    cmd_error(char *s)
 {
-    dprintf(2, "minishell: %s: : command not found\n", s);
+    dprintf(2, "minishell: %s: command not found\n", s);
     exit(1);
-        /*ft_putstr_fd("minishell: ", 2);
-        ft_putstr_fd(s, 2);
-        ft_putstr_fd(": command not found\n", 2);*/
 }
 
 void    path_error(char *s)
 {
     dprintf(2, "minishell: %s: No such file or directory\n", s);
     exit(1);
-        /*ft_putstr_fd("minishell: ", 2);
-        ft_putstr_fd(s, 2);
-        ft_putstr_fd(": No such file or directory\n", 2);*/
 }
 
 int     ft_path(char *command, t_arguments *arguments, t_node *head)
@@ -101,9 +95,11 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
     int pid;
 
     pid = 0;
-   // if (g_global.p == 0)
-    pid = fork();
-    g_global.forked = 0;
+    if (g_global.p == 0)
+    {
+        pid = fork();
+        g_global.forked = 0;
+    }
     if (pid == 0)
     {
         if (ft_isabsolute(command))
@@ -111,7 +107,6 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
         if (!(path = getpath(head)))
         {
             path_error(command);
-            //exit(1);
         }
         split = ft_split(path, ':');
         cmd = check_command(split, command);
@@ -121,13 +116,15 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
         else
         {
             cmd_error(command);
-            //exit(1);
         }
     }
     else
     {
-        wait(NULL);
-        g_global.forked = 1;
+        if (g_global.p == 0)
+        {
+            wait(NULL);
+            g_global.forked = 1;
+        }
     }
     return(0);
 }

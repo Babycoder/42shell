@@ -46,15 +46,39 @@ char    *fetch_var_name(char *slice, int i) //return the variable name
     return (result);
 }
 
-char    *var_replacement(t_var_rep *data)//replaces the dollar + variable name with the latters content
+char    *ft_strjoin_dollar_sign(char *s1, char *s2)
+{
+    int i = 0;
+    int j = 0;
+    char *result = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+    while (s1[i] != 0)
+    {
+        result[i] = s1[i];
+        i++;
+    }
+    while (s2[j] != 0)
+    {
+        result[i] = s2[j];
+        i++;
+        j++;
+    }
+    result[i] = 0;
+    free(s1);
+    free(s2);
+    s1 = NULL;
+    s2 = NULL;
+    return(result);
+}
+
+char    *var_replacement(t_var_rep *data, char  *slice)//replaces the dollar + variable name with the latters content
 {
     char *tmp_1;
     char *tmp_2;
 
-    tmp_1 = ft_substr(data->slice, 0, data->dollar_position - 1);
-    tmp_2 = ft_substr(data->slice, data->dollar_position + ft_strlen(data->variable_name) + 1, ft_strlen(data->slice));
-    tmp_1 = m_strjoin(tmp_1, data->variable_content);
-    tmp_1 = m_strjoin(tmp_1, tmp_2);
+    tmp_1 = ft_substr(slice, 0, data->dollar_position - 1);
+    tmp_2 = ft_substr(slice, data->dollar_position + ft_strlen(data->variable_name) + 1, ft_strlen(slice));
+    tmp_1 = ft_strjoin_dollar_sign(tmp_1, ft_strdup(data->variable_content));
+    tmp_1 = ft_strjoin_dollar_sign(tmp_1, tmp_2);
     return(tmp_1);
 }
 
@@ -87,10 +111,16 @@ t_env       *fetch_all_variables(char **env)
     while (env[i] != NULL)
     {
         equ = equal_sign(env[i]);
-        if (equ == -1)
-            break ;
-        ptr->var_name = ft_substr(env[i], 0, equ - 1);
-        ptr->var_content = ft_substr(env[i], equ + 1, ft_strlen(env[i]));
+        if (equ != -1)
+        {
+            ptr->var_name = ft_substr(env[i], 0, equ - 1);
+            ptr->var_content = ft_substr(env[i], equ + 1, ft_strlen(env[i]));
+        }
+        else if (equ == -1)
+        {
+             ptr->var_name = ft_strdup(env[i]);
+             ptr->var_content = ft_strdup("");
+        }
         if (env[++i] != NULL)
         {
             ptr->next = malloc(sizeof(t_env));
@@ -154,30 +184,36 @@ char    *fetch_variable_content(char **env, char    *name)
 char    *dollar_treatment(char  **env, char *slice)
 {
     int i = 0;
-    t_var_rep *data = malloc(sizeof(t_var_rep));
-    data->slice = slice;
-    while (data->slice[i] != 0)
+    t_var_rep *data;
+    
+    data = malloc(sizeof(t_var_rep));
+    if (data == NULL)
+        return (NULL);
+    while (slice[i] != 0)
     {
-        i = find_valid_dollar(data->slice);
+        i = find_valid_dollar(slice);
         if (i == -1)
             break ;
         data->dollar_position = i++;
-        data->variable_name = fetch_var_name(data->slice, i);
-        data->variable_content = fetch_variable_content(env, data->variable_name);//aymen function goes here
+        if (slice[i] == '?')
+        {
+            data->variable_name = ft_strdup("?");
+            data->variable_content = ft_itoa(g_global.ret);
+        }
+        else
+        {
+            data->variable_name = fetch_var_name(slice, i);
+            data->variable_content = fetch_variable_content(env, data->variable_name);
+        }
         if (data->variable_content == NULL)
             data->variable_content = ft_strdup("");
-        data->slice = var_replacement(data);
+        slice = var_replacement(data, slice);
+        free(data->variable_name);
+        data->variable_name = NULL;
+        free(data->variable_content);
+        data->variable_content = NULL;
     }
-    return (data->slice);
+    free(data);
+    data =  NULL;
+    return (slice);
 }
-/*
-int     main(int    argc, char      **argv, char        **env)
-{
-    int i;
-
-    i = 0;
-    char *str = ft_strdup(argv[1]);
-    dollar_treatment(env, str);
-    printf("%s\n", str);
-    return (0);
-}*/

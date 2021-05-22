@@ -59,7 +59,7 @@ char    *ft_error(char *str)
     return (NULL);
 }
 
-char    *m_strjoin(char *s1, char *s2)
+char    *ft_strjoin(char *s1, char *s2)
 {
     int i = 0;
     int j = 0;

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ay_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 00:20:23 by ayghazal          #+#    #+#             */
-/*   Updated: 2019/10/23 23:02:06 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 12:25:32 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+char	*ay_strdup(const char *s1)
 {
 	char		*ptr;
 	int			len;

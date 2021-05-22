@@ -91,7 +91,5 @@ char    *quote_slash(char *slice)//replace t_line data with return value
         treat_slash(slice, box);
         
     }
-    free(slice);
-    slice = NULL;
     return (box->ret);
 }

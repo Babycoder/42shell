@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ay_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayghazal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 18:38:40 by ayghazal          #+#    #+#             */
-/*   Updated: 2019/10/24 17:39:55 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/21 12:25:38 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ay_strjoin(char const *s1, char const *s2)
 {
 	char		*temp;
 	char		*res;

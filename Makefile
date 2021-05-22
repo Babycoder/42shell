@@ -6,7 +6,7 @@ FLAGS = -Wall -Wextra -Werror
 
 all:
 	@make -C ./libft
-	gcc -o minishell $(SRC) ./libft/libft.a
+	gcc -ltermcap -o minishell $(SRC) ./libft/libft.a
 
 clean:
 	rm -rf $(OBJ)

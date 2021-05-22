@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:42:44 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/19 12:42:41 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/22 16:28:55 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,16 @@ int     ft_exit(t_arguments *arguments)
                 ft_putstr_fd("minishell: exit: too many arguments\n", 2);
                 return(1);
             }
-            exit(ft_atoi(arguments->arg));
+            g_global.ret = ft_atoi(arguments->arg);
+            exit(g_global.ret);
         }
         else
         {
             exit_error(arguments->arg);
-            exit(255);
+            g_global.ret = 255;
+            exit(g_global.ret);
         }
     }
     else
-        exit(0);
+        exit(g_global.ret);
 }

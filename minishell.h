@@ -13,11 +13,7 @@
 #include "./libft/libft.h"
 #include "./parse/functions_headerfile.h"
 
-typedef struct s_node 
-{
-    char *data;
-    struct s_node *next;
-}               t_node;
+
 
 typedef struct  s_var
 {

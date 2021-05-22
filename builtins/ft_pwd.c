@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:23:41 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/03 13:56:25 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/22 15:54:33 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ int     ft_pwd()
         return(1);
     else
         ft_putendl_fd(cwd, 1);
-    return (0);  
+    return (0);
 }
