@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:32:51 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/21 12:22:32 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/23 19:55:20 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,11 +296,13 @@ int     valid_id(char *s)
     return(1);
 }
 
-void    export_error(char *s)
+int    export_error(char *s, int i)
 {
-    ft_putstr_fd("minishell: export: `", 2);
-    ft_putstr_fd(s, 2);
-    ft_putstr_fd("': not a valid identifier\n", 2);
+    if (i == 0)
+        fd_putstr(2, "minishell: export: `", s, "': not a valid identifier\n", NULL);
+    else if (i == 1)
+        fd_putstr(2, "minishell: unset: `", s, "': not a valid identifier\n", NULL);
+    return(1);
 }
 
 
@@ -369,6 +371,18 @@ void    deletenode(t_node **head, char *pos)
     free(tmp->next); // fre memory
     tmp->next = next;
 
+}
+
+void    fd_putstr(int fd, char    *s1, char   *s2, char   *s3, char   *s4)
+{
+    if (s1 != NULL)
+        write(fd, s1, ft_strlen(s1));
+    if (s2 != NULL)
+        write(fd, s2, ft_strlen(s2));
+    if (s3 != NULL)
+        write(fd, s3, ft_strlen(s3));
+    if (s4 != NULL)
+        write(fd, s4, ft_strlen(s4));
 }
 
 

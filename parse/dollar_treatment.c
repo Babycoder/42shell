@@ -19,10 +19,10 @@ ssize_t     find_valid_dollar(char *slice)// returns index of the first valid do
     while (slice[i] != 0)
     {
        while (slice[i] != 0
-        && ((ft_test_char("\'\"$", slice[i]) == 0)
-        || (ft_test_char("\'\"$", slice[i]) == 1 && back_slash_presence(slice, i - 1) == 1)))
+        && ((ft_test_char("\'$", slice[i]) == 0)
+        || (ft_test_char("\'$", slice[i]) == 1 && back_slash_presence(slice, i - 1) == 1)))
             i++;
-        if (ft_test_char("\'\"", slice[i]) == 1)
+        if (ft_test_char("\'", slice[i]) == 1)
             i = skip_quotes(slice, i) + 1;
         if (slice[i] == '$' && back_slash_presence(slice, i - 1) == 0)
             return (i);

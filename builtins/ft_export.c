@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 14:32:28 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/16 15:37:45 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/23 09:10:42 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int     check_overwrite(t_node *node, char *s)
 
 int     ft_export(t_arguments *arguments, t_node **head)
 {
+    int ret;
 
+    ret = 0;
     if (arguments == NULL)
         print_export(*head);
     while (arguments != NULL)
@@ -65,8 +67,8 @@ int     ft_export(t_arguments *arguments, t_node **head)
                 push_node(head, arguments->arg);
         }
         else
-            export_error(arguments->arg);
+            ret = export_error(arguments->arg, 0);
         arguments = arguments->next;
     }
-    return(1);
+    return(ret);
 }

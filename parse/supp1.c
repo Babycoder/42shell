@@ -61,7 +61,7 @@ t_linedata  *w_s(char   *input, t_bag   *bag, t_linedata *data)
     {
         if (data->redirection_file == 0)
             data->argument = 1;
-        if (data->argument == 1 && bag->cmd_check == 0)
+        if (data->argument == 1 && bag->cmd_check == 0 && data->slice[0] != '$')
         {
             data->command = 1;
             bag->cmd_check = 1;

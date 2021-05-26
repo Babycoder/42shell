@@ -33,13 +33,14 @@ void    shlvl(t_node **head)
 }
 
 
-void    *full_ws_niet(t_toolbox     *box, t_format *ptr, t_node    **head)
+void    *full_ws_niet(t_toolbox     *box, t_node    **head)
 {
 	box->check = parse(box->str, box->formaptr);
 	if (my_strcmp(box->check, "Unmatched_Quotes") == 0
 	|| my_strcmp(box->check, "Back_slash_Error") == 0)
 	{
-        put_strings("\n>",NULL,NULL,NULL);
+        box->str = ft_strdup("");
+        put_strings("\n> ",NULL,NULL,NULL);
         return (NULL);
 	}
 	else if (my_strcmp(box->check, "Redirection_error") == 0
@@ -80,6 +81,15 @@ void handler(int sig)
     }
 }
 
+void    handler2(int sig)
+{
+	if (g_global.forked == 0)
+    {
+        g_global.ret = 131;
+        ft_putendl_fd("Quit: 3", 2);
+        //g_global.forked = 1;
+    }
+}
 
 void    init_pwd(t_node **head)
 {
@@ -98,34 +108,41 @@ void    init_pwd(t_node **head)
     free(tmp);
 }
 
-void    handler2(int sig)
+
+t_node      *init_shell(char        **env)
 {
-	if (g_global.forked == 0)
-    {
-        ft_putendl_fd("Quit: 3", 2);
-        g_global.forked = 1;
-    }
-}
-
-
-
-int     main(int    argc, char      **argv, char        **env)
-{
-    char *input;
-    t_format    *ptr;
     t_node  *head;
-
     head = get_envp(env);
     shlvl(&head);
     init_pwd(&head);
     g_global.forked = 1;
-    signal(SIGQUIT, handler2);
     signal(SIGINT, handler);
-    g_global.box = malloc(sizeof(t_toolbox));
-    t_toolbox *box = g_global.box;
+    signal(SIGQUIT, handler2);
+    return (head);
+}
+
+t_toolbox   *parse_init()
+{
+    t_toolbox   *box;
+
+    box = malloc(sizeof(t_toolbox));
     if (box == NULL || init_all(box) == NULL)
+        return (NULL);
+    g_global.box = box;
+    return (box);
+}
+
+int     main(int    argc, char      **argv, char        **env)
+{
+    t_node  *head;
+    t_toolbox   *box;
+
+    head = init_shell(env);
+    box = parse_init();
+    if (box == NULL)
         return (1);
     put_strings("minishell~$ ",NULL,NULL,NULL);
+
     while (1)
     {
 		box->ascii = fetch_char(&box->old);
@@ -133,18 +150,17 @@ int     main(int    argc, char      **argv, char        **env)
             printable_key(box);
 		else if (box->ascii == DELETE_KEY)//delete char
             delete_key(box);
-		else if (box->ascii == ENTER_KEY)//enter
-        {
-	        tcsetattr(0, TCSANOW, &box->old);
-            if (enter_key(box, ptr, &head) == NULL)
-                continue ;
-        }
 		else if (box->ascii == UP_KEY)
             up_key(box);
 		else if (box->ascii == DOWN_KEY)
             down_key(box);
 		else if (box->ascii == CTRL_D)
             ctrl_d_key(box);
+		else if (box->ascii == ENTER_KEY)//enter
+        {
+	        tcsetattr(0, TCSANOW, &box->old);
+            enter_key(box, &head);
+        }
     }
     return (0);
 }

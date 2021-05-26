@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/22 15:38:59 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/25 14:39:30 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int    check_redirection(t_redirections *redirections, t_node *head)
             out = open(redirections->redirection_file, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
         if ((in < 0 || out < 0))
         {
-            dprintf(2, "minishell: %s: %s\n", redirections->redirection_file, "No such file or directory");
+            fd_putstr(2, "minishell: ", redirections->redirection_file, ": ", "No such file or directory\n");
             return(1);
         }
         if (redirections->next && out && ft_strcmp(redirections->next->redirection_type, "<"))
@@ -77,31 +77,30 @@ int    check_redirection(t_redirections *redirections, t_node *head)
 
 void    cmd_error(char *s)
 {
-    dprintf(2, "minishell: %s: command not found\n", s);
-    exit(1);
+    fd_putstr(2, "minishell: ", s, ": command not found\n", NULL);
+    exit(127);
 }
 
 void    path_error(char *s)
 {
-    dprintf(2, "minishell: %s: No such file or directory\n", s);
+    fd_putstr(2, "minishell: ", s, ": No such file or directory\n", NULL);
     exit(1);
 }
 
-int     ft_path(char *command, t_arguments *arguments, t_node *head)
+int     ft_path_forked(char *command, t_arguments *arguments, t_node *head)
 {
+    int wstatus;
     char *path;
     char **split;
     char  *cmd;
     int pid;
 
-    pid = 0;
-    if (g_global.p == 0)
-    {
-        pid = fork();
-        g_global.forked = 0;
-    }
+    pid = fork();
+    g_global.forked = 0;
     if (pid == 0)
     {
+        if (ft_strcmp(command, "") == 0)
+            cmd_error(command);
         if (ft_isabsolute(command))
             execve(command, convertlist(arguments, command), convertenv(head));
         if (!(path = getpath(head)))
@@ -114,17 +113,51 @@ int     ft_path(char *command, t_arguments *arguments, t_node *head)
         if (cmd)
             execve(cmd, convertlist(arguments, command), convertenv (head));
         else
-        {
             cmd_error(command);
-        }
     }
     else
     {
-        if (g_global.p == 0)
-        {
-            wait(NULL);
-            g_global.forked = 1;
-        }
+        waitpid(pid, &wstatus, 0);
+        g_global.forked = 1;
+        if (WIFEXITED(wstatus))
+            g_global.ret = WEXITSTATUS(wstatus);
     }
+    return(g_global.ret);
+}
+
+int     ft_path_not_forked(char *command, t_arguments *arguments, t_node *head)
+{
+    char *path;
+    char **split;
+    char  *cmd;
+    
+    if (ft_strcmp(command, "") == 0)
+            cmd_error(command);
+    if (ft_isabsolute(command))
+        execve(command, convertlist(arguments, command), convertenv(head));
+    if (!(path = getpath(head)))
+    {
+        path_error(command);
+    }
+    split = ft_split(path, ':');
+    cmd = check_command(split, command);
+    ft_free_split(split);
+    if (cmd)
+        execve(cmd, convertlist(arguments, command), convertenv (head));
+    else
+    {
+        cmd_error(command);
+    }
+    exit(0);
+}
+
+
+int     ft_path(char *command, t_arguments *arguments, t_node *head)
+{
+    
+    if (g_global.p == 0)
+        ft_path_forked(command, arguments, head);
+    else if (g_global.p == 5)
+        ft_path_not_forked(command, arguments, head);
     return(0);
 }

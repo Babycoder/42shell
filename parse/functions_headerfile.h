@@ -168,9 +168,11 @@ void                up_key(t_toolbox   *box);
 void                down_key(t_toolbox   *box);
 void                ctrl_d_key(t_toolbox   *box);
 void                update_position(t_toolbox   *box);
-void                *full_ws_niet(t_toolbox     *box, t_format *ptr, t_node    **head);
+void                *full_ws_niet(t_toolbox     *box, t_node    **head);
 void                full_ws_da(t_toolbox   *box);
-void                *enter_key(t_toolbox    *box,  t_format   *ptr, t_node    **head);
+void                *enter_key(t_toolbox    *box, t_node    **head);
+t_node              *init_shell(char        **env);
+t_toolbox           *parse_init();
 //-------------main.c----------------//
 
 //--------------parse.c--------------//

@@ -81,8 +81,10 @@ void    up_key(t_toolbox   *box)
 	tputs(tgetstr("dl",NULL), 1, put_char);
     put_strings("minishell~$ ",NULL,NULL,NULL);
 	if (box->ptr->previous != NULL)
-		box->ptr = box->ptr->previous;
-	box->str = ft_strdupe(box->ptr->line);
+    {
+	    box->ptr = box->ptr->previous;
+	    box->str = ft_strdupe(box->ptr->line);
+    }
     put_strings(box->str,NULL,NULL,NULL);
 }
 
@@ -92,8 +94,10 @@ void    down_key(t_toolbox   *box)
 	tputs(tgetstr("dl",NULL), 1, put_char);
     put_strings("minishell~$ ",NULL,NULL,NULL);
 	if (box->ptr->next != NULL)
+    {
 		box->ptr = box->ptr->next;
-	box->str = ft_strdupe(box->ptr->line);
+	    box->str = ft_strdupe(box->ptr->line);
+    }
     put_strings(box->str,NULL,NULL,NULL);
 }
 
@@ -113,13 +117,6 @@ void    update_position(t_toolbox   *box)
     while (box->ptr->next != NULL)
 	    box->ptr = box->ptr->next;
 }
-
-
-
-
-
-
-
 void    full_ws_da(t_toolbox   *box)
 {
 	box->ptr->next = malloc(sizeof(t_history));
@@ -131,7 +128,7 @@ void    full_ws_da(t_toolbox   *box)
     put_strings("\nminishell~$ ",NULL,NULL,NULL);
 }
 
-void    *enter_key(t_toolbox    *box,  t_format   *ptr, t_node    **head)
+void    *enter_key(t_toolbox    *box, t_node    **head)
 {
 	if (my_strcmp(box->str, "") != 0)
 	{
@@ -139,12 +136,12 @@ void    *enter_key(t_toolbox    *box,  t_format   *ptr, t_node    **head)
 		if (box->ptr->next != NULL)
             update_position(box);
 		box->ptr->line = box->str;
-		if (box->i == 0)//isnt full of wh_sp
+		if (box->i == 0)
         {
-            if (full_ws_niet(box, ptr, head) == NULL)
+            if (full_ws_niet(box, head) == NULL)
                 return (NULL);
         }
-		else//is full of wh_sp
+		else
             full_ws_da(box);
 	}
 	else if(my_strcmp(box->str, "") == 0)

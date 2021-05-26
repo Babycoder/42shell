@@ -46,7 +46,7 @@ t_node     *get_envp(char **env);
 char     *check_command(char **split, char *cmd);
 char    *get_path(t_node *node);
 char	*ft_equal(char	*s1);
-void    export_error(char *s);
+int    export_error(char *s, int i);
 int     valid_id(char *s);
 void    print_export(t_node *node);
 void    print_cases(char *s, int ret);
@@ -70,4 +70,7 @@ int    ft_setpipes(t_pipes *pipes, t_node **head);
 int     ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirections, t_node **head);
 void    ft_resetio(int sin, int sout);
 char    *get_envar(t_node *node, char *s);
+void    fd_putstr(int fd, char    *s1, char   *s2, char   *s3, char   *s4);
+int     ft_path_not_forked(char *command, t_arguments *arguments, t_node *head);
+int     ft_path_forked(char *command, t_arguments *arguments, t_node *head);
 #endif

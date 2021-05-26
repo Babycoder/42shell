@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 12:17:49 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/22 16:28:03 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/05/25 15:08:55 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirecti
     sout = dup(STDOUT_FILENO);
     
     if(check_redirection(redirections, *head))
+    {   
+        g_global.ret = 1;
         return(1);
+    }
     if (!command)
     {
         ft_resetio(sin, sout);
@@ -48,7 +51,7 @@ int ft_exec_cmd(char *command, t_arguments *arguments, t_redirections *redirecti
     else if (ft_strcmp(command, "unset") == 0)
         g_global.ret = ft_unset(arguments, head);
     else if (ft_strcmp(command, "export") == 0)
-        ft_export(arguments, head);
+        g_global.ret = ft_export(arguments, head);
     else
         ft_path(command, arguments, *head);
     ft_resetio(sin, sout);
@@ -64,10 +67,8 @@ int ft_exec(t_format *ptr, t_node **head)
     while(ptr != NULL)
     {
         g_global.p = 0;
-        //g_global.forked = 1;
         tmp = convertenv(*head);
         purge(tmp, ptr);
-        //print_da(ptr);
         if(ptr->pipes == NULL)
             ft_exec_cmd(ptr->command, ptr->arguments, ptr->redirections, head);
         else if (ptr->pipes)
