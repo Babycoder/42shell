@@ -75,15 +75,14 @@ typedef struct  s_pipes
 typedef struct  s_format
 {
     char                *line;
-    int                 pipe_presence;
-
     t_linedata         *sliced_line;
     char                *pre_pipe_line;
     char                *command;
     t_arguments         *arguments;
     t_redirections      *redirections;
-    
     t_pipes             *pipes;
+    
+    int                 pipe_presence;
     struct  s_format    *next;
 }   t_format;
 
@@ -107,7 +106,7 @@ typedef     struct  s_tools
 
 typedef     struct  s_toolbox
 {
-    t_format        *formaptr;;
+    t_format        *formaptr;
 	t_history	    *ptr;
 	t_history 	    *tmp;
     int             ascii;
@@ -137,7 +136,7 @@ t_env               *fetch_all_variables(char **env);
 char                *ft_strdup(char     *str);
 char                *fetch_wanted_var(char    *name, t_env   *ptr);
 void                print_k(t_env   *ptr);
-char                *fetch_variable_content(char **env, char    *name);
+char                *fetch_variable_content(t_env *ptr, char    *name);
 char                *dollar_treatment(char  **env, char *slice);
 //--------dollar_treatment.c---------//
 
@@ -162,7 +161,7 @@ char                *fetch_input();
 //-------------main.c----------------//
 void	   	        *init_all(t_toolbox   *box);
 void                put_strings(char    *s1, char   *s2, char   *s3, char   *s4);
-void		        init_lst(t_toolbox   *box);
+void		        init_history_node_data(t_toolbox   *box);                                                         ///------------------------------------
 void                printable_key(t_toolbox   *box);
 void                delete_key(t_toolbox   *box);
 void                up_key(t_toolbox   *box);
@@ -170,7 +169,7 @@ void                down_key(t_toolbox   *box);
 void                ctrl_d_key(t_toolbox   *box);
 void                update_position(t_toolbox   *box);
 void                *full_ws_niet(t_toolbox     *box, t_node    **head);
-void                full_ws_da(t_toolbox   *box);
+void                next_history_node(t_toolbox   *box);                                                         ///------------------------------------
 void                *enter_key(t_toolbox    *box, t_node    **head);
 t_node              *init_shell(char        **env);
 t_toolbox           *parse_init();
@@ -179,7 +178,7 @@ t_toolbox           *parse_init();
 //--------------parse.c--------------//
 void                initialise(t_bag       **bag, t_linedata **data, t_linedata  **tmp);
 t_linedata          *split_id(char   *input);
-char                *parse(char *input, t_format    *ptr);
+char                *parse(t_toolbox    *box);
 //--------------parse.c--------------//
 
 //--------------pipes.c---------------//
@@ -220,7 +219,7 @@ void                skip_un(char    *input, int i, int *a);
 t_format            *fetch(t_format    *ptr, char   *input, int    *start, int i);
 void                *semicolon_split(t_format    *ptr, char     *input);
 void                printf_individual_lines(t_format    *ptr);
-char                *last_check(char *input);
+char                *last_check(t_toolbox *box);
 //-------------semi_split.c-------------//
 
 
@@ -248,7 +247,6 @@ int                 put_char(int c);
 char	            *delete_char(char	*str);
 int		            all_sp(char	*str);
 //-----------------term.c----------------//
-
 //------------------utils.c--------------//
 int                 ft_test_char(char   *str, char c);
 int                 is_white_space(char c);
@@ -265,3 +263,7 @@ static	char		*ft_printneg(unsigned int nb, char *s, int k);
 static	int			ft_counter(int n);
 static	int			check_neg(int n);
 //---------------------ft_itoa.c----------//
+void                free_history();
+void                free_tformat();
+void                yes_pipes_free(t_format  *tmp);
+void                no_pipes_free(t_format  *ptr);

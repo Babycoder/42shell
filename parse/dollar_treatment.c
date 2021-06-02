@@ -125,6 +125,7 @@ t_env       *fetch_all_variables(char **env)
         {
             ptr->next = malloc(sizeof(t_env));
             ptr = ptr->next;
+            ptr->next = NULL;
         }
     }
     return (ret);
@@ -171,22 +172,44 @@ void    print_k(t_env   *ptr)
     }
 }
 
-char    *fetch_variable_content(char **env, char    *name)
+char    *fetch_variable_content(t_env   *ptr, char    *name)
 {
-    t_env   *ptr;
     char    *ret;
-
-    ptr = fetch_all_variables(env);
     ret = fetch_wanted_var(name, ptr);
+    if (ret == NULL)
+        ret = ft_strdup("");
     return (ret);
 }
-
+void    free_env_contens(t_env   *ptr)
+{
+    while(ptr != NULL)
+    {
+        free(ptr->var_content);
+        free(ptr->var_name);
+        ptr = ptr->next;
+    }
+}
+void    free_env_nodes(t_env   *ptr)
+{
+    t_env   *tmp;
+    while(ptr != NULL)
+    {
+        tmp = ptr->next;
+        free(ptr);
+        ptr = tmp;
+    }
+}
 char    *dollar_treatment(char  **env, char *slice)
 {
     int i = 0;
     t_var_rep *data;
-    
+    t_env   *ptr_env;
+    char *kass;
+    char    *str;
+    int counter;
+    ptr_env = fetch_all_variables(env);
     data = malloc(sizeof(t_var_rep));
+    counter = 0;
     if (data == NULL)
         return (NULL);
     while (slice[i] != 0)
@@ -195,25 +218,41 @@ char    *dollar_treatment(char  **env, char *slice)
         if (i == -1)
             break ;
         data->dollar_position = i++;
-        if (slice[i] == '?')
+        if (ft_test_char("\'\"", slice[i]) == 1)
         {
-            data->variable_name = ft_strdup("?");
-            data->variable_content = ft_itoa(g_global.ret);
+            kass = ft_strjoin_dollar_sign(ft_substr(slice,0,i-2)
+            , ft_substr(slice,i, ft_strlen(slice)));
+            free(slice);
+            slice = kass;
         }
         else
         {
-            data->variable_name = fetch_var_name(slice, i);
-            data->variable_content = fetch_variable_content(env, data->variable_name);
+            if (slice[i] == '?')
+            {
+                data->variable_name = ft_strdup("?");
+                data->variable_content = ft_itoa(g_global.ret);
+            }
+            else
+            {
+                data->variable_name = fetch_var_name(slice, i);
+                data->variable_content = fetch_variable_content(ptr_env, data->variable_name);
+            }
+            if (my_strcmp(data->variable_name, "") != 0)
+            {
+                kass = var_replacement(data, slice);
+                free(slice);
+                slice = kass;
+            }
+            free(data->variable_name);
+            data->variable_name = NULL;
+            free(data->variable_content);
+            data->variable_content = NULL;
         }
-        if (data->variable_content == NULL)
-            data->variable_content = ft_strdup("");
-        slice = var_replacement(data, slice);
-        free(data->variable_name);
-        data->variable_name = NULL;
-        free(data->variable_content);
-        data->variable_content = NULL;
     }
     free(data);
     data =  NULL;
+    free_env_contens(ptr_env);
+    free_env_nodes(ptr_env);
+    ptr_env = NULL;
     return (slice);
 }
