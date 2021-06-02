@@ -70,6 +70,7 @@ void handler(int sig)
 {
     if (g_global.forked == 1)
     {
+        g_global.ret = 1;
         put_strings("\nminishell~$ ",NULL,NULL,NULL);
         free(g_global.box->str);
         g_global.box->str = NULL;
@@ -77,6 +78,7 @@ void handler(int sig)
     }
     else if (g_global.forked == 0) //cat
     {
+        g_global.ret = 130;
         ft_putchar_fd('\n', 1);
     }
 }
@@ -87,7 +89,7 @@ void    handler2(int sig)
     {
         g_global.ret = 131;
         ft_putendl_fd("Quit: 3", 2);
-        //g_global.forked = 1;
+        g_global.forked = 1;
     }
 }
 

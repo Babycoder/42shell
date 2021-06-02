@@ -119,6 +119,7 @@ typedef     struct  s_toolbox
 
 typedef struct s_global
 {
+    int stop;
     int forked;
     int p;
     int ret;

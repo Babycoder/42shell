@@ -6,7 +6,7 @@
 /*   By: ayghazal <ayghazal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 16:42:32 by ayghazal          #+#    #+#             */
-/*   Updated: 2021/05/25 14:39:30 by ayghazal         ###   ########.fr       */
+/*   Updated: 2021/06/02 14:01:09 by ayghazal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int    check_redirection(t_redirections *redirections, t_node *head)
         if (!(ft_strcmp(redirections->redirection_type, "<")))
             in = open(redirections->redirection_file,  O_RDONLY, S_IRWXU);
         if(!(ft_strcmp(redirections->redirection_type, ">")))
-            out = open(redirections->redirection_file, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+            out = open(redirections->redirection_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
         if(!(ft_strcmp(redirections->redirection_type, ">>")))
-            out = open(redirections->redirection_file, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
+            out = open(redirections->redirection_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
         if ((in < 0 || out < 0))
         {
             fd_putstr(2, "minishell: ", redirections->redirection_file, ": ", "No such file or directory\n");
@@ -114,6 +114,7 @@ int     ft_path_forked(char *command, t_arguments *arguments, t_node *head)
             execve(cmd, convertlist(arguments, command), convertenv (head));
         else
             cmd_error(command);
+        exit(0);
     }
     else
     {
